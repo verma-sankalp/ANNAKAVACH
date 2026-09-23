@@ -529,3 +529,1582 @@ html[data-theme="dark"] .detail-tab-btn.active {
   flex-wrap: wrap;
   gap: 12px;
 }
+
+/* ==========================================================================
+   ANNAKAVACH — Current HTML Structural Compatibility Layer
+   Aligns the current index.html class names with the layout architecture.
+   ========================================================================== */
+
+/* Header / navigation */
+.theme-switch-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  padding: 2px;
+}
+
+/* Current hero */
+.hero-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.pulse-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: var(--brand-primary);
+  box-shadow: 0 0 0 4px var(--brand-light);
+}
+.hero-lead {
+  max-width: 920px;
+  margin: 7px 0 18px;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+.hero-title em {
+  color: var(--brand-primary);
+  font-style: normal;
+}
+
+/* Current seven-stage pipeline: always one horizontal row on desktop */
+.workflow-pipeline-bar {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 0;
+  padding: 8px;
+  margin: 0 0 16px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+}
+.workflow-pipeline-bar .pipeline-step {
+  min-width: 0;
+  min-height: 58px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 7px 6px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+}
+.workflow-pipeline-bar .pipeline-step:hover,
+.workflow-pipeline-bar .pipeline-step.active {
+  background: var(--brand-light);
+  border-color: var(--brand-primary);
+}
+.pipeline-step-badge {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--bg-subtle);
+  color: var(--brand-primary);
+  border: 1px solid var(--border-card);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 800;
+}
+.pipeline-step.active .pipeline-step-badge {
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
+  color: var(--text-inverse);
+}
+.pipeline-step-label {
+  min-width: 0;
+  color: var(--text-main);
+  font-size: 0.67rem;
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: left;
+}
+.pipeline-divider {
+  width: 1px;
+  align-self: center;
+  height: 24px;
+  background: var(--border-subtle);
+}
+.workflow-pipeline-bar .pipeline-info-box {
+  grid-column: 1 / -1;
+}
+
+/* History strip current naming */
+.history-ribbon-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex: 0 0 auto;
+  color: var(--text-dim);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.history-chips-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+/* Commodity preset ribbon */
+.presets-ribbon {
+  width: 100%;
+  margin-bottom: 18px;
+  padding: 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.presets-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+.presets-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+.presets-icon-badge {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--brand-light);
+  color: var(--brand-primary);
+}
+.presets-title-text-group {
+  min-width: 0;
+}
+.presets-title {
+  color: var(--text-main);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+.presets-subtitle {
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+}
+.presets-count-badge {
+  margin-left: auto;
+  white-space: nowrap;
+  padding: 4px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-subtle);
+  color: var(--brand-primary);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+.presets-filter-deck {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.9fr) minmax(0, 2fr);
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.presets-filter-label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--text-dim);
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.presets-category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.commodity-search-box {
+  position: relative;
+  min-width: 0;
+}
+.commodity-search-input {
+  width: 100%;
+  min-height: 34px;
+  padding: 7px 34px 7px 32px;
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  color: var(--text-main);
+  outline: none;
+}
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  pointer-events: none;
+}
+.search-clear-btn {
+  position: absolute;
+  right: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.presets-nested-viewport {
+  width: 100%;
+  overflow: hidden;
+}
+.presets-clean-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+.presets-clean-grid .cat-chip {
+  min-width: 0;
+}
+.presets-footer-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+.presets-footer-status {
+  color: var(--text-dim);
+  font-size: 0.68rem;
+}
+.presets-quick-tip {
+  color: var(--text-dim);
+  font-size: 0.68rem;
+}
+
+/* Main workbench — current HTML uses sidebar-form-col/workbench-results-col */
+.workbench-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+.sidebar-form-col,
+.workbench-results-col {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.sidebar-form-col {
+  position: sticky;
+  top: 82px;
+}
+.results-container {
+  min-width: 0;
+}
+.panel-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.panel-icon {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+}
+
+/* Primary recommendation */
+.recommendation-hero-card {
+  min-width: 0;
+  padding: 20px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+.rec-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+.rec-badge-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.badge-top-match,
+.badge-score {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 0.66rem;
+  font-weight: 800;
+}
+.badge-top-match {
+  background: var(--brand-light);
+  color: var(--brand-primary);
+  border: 1px solid var(--border-subtle);
+}
+.badge-score {
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+}
+.rec-material-title {
+  margin-top: 8px;
+  color: var(--text-main);
+  font-size: 1.35rem;
+  line-height: 1.2;
+  font-weight: 800;
+}
+.rec-layers-formula {
+  margin-top: 7px;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.barrier-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 16px;
+}
+
+/* Current result/supporting grids */
+.score-progress-grid,
+.sim-metrics-grid,
+.eco-stats-list {
+  min-width: 0;
+}
+.score-progress-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.sim-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.eco-stats-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.standards-reference-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.standard-ref-card {
+  min-width: 0;
+  padding: 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+}
+.standard-card-head,
+.standards-deck-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.standard-badge-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.standard-icon-circle {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--bg-subtle);
+  color: var(--brand-primary);
+}
+.standard-title {
+  margin-top: 10px;
+  color: var(--text-main);
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+.standard-desc {
+  margin-top: 6px;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  line-height: 1.45;
+}
+.standard-spec-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+.standard-spec-item,
+.standard-spec-unit {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  font-size: 0.62rem;
+}
+.standard-spec-unit {
+  color: var(--brand-primary);
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+.standards-deck-title {
+  margin-top: 4px;
+  color: var(--text-main);
+  font-size: 1rem;
+}
+.standards-deck-subtitle {
+  max-width: 760px;
+  margin-top: 4px;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+.standards-stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  padding: 5px 9px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+.standards-stat-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand-primary);
+}
+
+/* Empty state */
+.empty-state-card {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 34px 24px;
+  text-align: center;
+  background: var(--bg-surface);
+  border: 1px dashed var(--border-card);
+  border-radius: var(--radius-lg);
+}
+.empty-state-icon-wrap {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: var(--brand-light);
+  color: var(--brand-primary);
+  margin-bottom: 12px;
+}
+.empty-state-title {
+  color: var(--text-main);
+  font-size: 1rem;
+  font-weight: 800;
+}
+.empty-state-subtitle {
+  max-width: 650px;
+  margin-top: 5px;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+.empty-state-steps-grid {
+  width: 100%;
+  max-width: 760px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+  margin-top: 18px;
+}
+.empty-step-box {
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px;
+  text-align: left;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+}
+.empty-step-num {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--brand-primary);
+  color: var(--text-inverse);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 800;
+}
+.empty-step-content {
+  min-width: 0;
+}
+.empty-step-title {
+  color: var(--text-main);
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+.empty-step-desc {
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: 0.64rem;
+  line-height: 1.35;
+}
+.empty-state-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+/* Analysis/validation banners */
+.analysis-loader-banner,
+.validation-alert-banner,
+.disclaimer-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 9px 12px;
+  margin-bottom: 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-card);
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+.spinner-icon {
+  flex: 0 0 auto;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Prevent long content from widening the page */
+.workbench-grid *,
+.presets-ribbon *,
+.recommendation-hero-card *,
+.standards-regulatory-deck * {
+  min-width: 0;
+}
+
+/* Structural responsive behavior */
+@media (max-width: 1100px) {
+  .presets-clean-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .standards-reference-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .barrier-specs-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 900px) {
+  .workflow-pipeline-bar {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .pipeline-divider { display: none; }
+  .workbench-grid {
+    grid-template-columns: 1fr;
+  }
+  .sidebar-form-col {
+    position: static;
+  }
+  .presets-filter-deck {
+    grid-template-columns: 1fr;
+  }
+  .presets-clean-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .rec-header {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 650px) {
+  .container { padding: 0 16px; }
+  .workflow-pipeline-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .presets-header,
+  .standards-deck-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .presets-count-badge,
+  .standards-stat-pill { margin-left: 0; }
+  .presets-clean-grid,
+  .standards-reference-grid,
+  .empty-state-steps-grid,
+  .sim-metrics-grid,
+  .score-progress-grid,
+  .eco-stats-list {
+    grid-template-columns: 1fr;
+  }
+  .barrier-specs-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .workflow-pipeline-bar {
+    grid-template-columns: 1fr 1fr;
+  }
+  .pipeline-step-label { font-size: 0.62rem; }
+  .barrier-specs-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================================
+   CURRENT INDEX STRUCTURE — REFERENCE LAYOUT REPAIR
+   ============================================================================ */
+
+/* Header in index.html is not wrapped in .container. */
+.site-header {
+  padding: 12px 0;
+}
+.site-header > .nav-wrap {
+  width: min(100% - 64px, 1490px);
+  margin: 0 auto;
+  gap: 28px;
+}
+
+/* Keep navigation visually balanced like the reference. */
+.nav-links {
+  flex: 1 1 auto;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+}
+.nav-actions {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+/* Current hero names used by index.html. */
+.hero-section { padding: 28px 0 18px; }
+.hero-title {
+  max-width: 1200px;
+  font-size: clamp(1.75rem, 2.15vw, 2.35rem);
+  line-height: 1.16;
+  letter-spacing: -0.035em;
+}
+.hero-lead {
+  max-width: 980px;
+  margin: 7px 0 18px;
+  font-size: .82rem;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   Workflow pipeline
+   IMPORTANT: markup is 7 .pipeline-step elements + 6 arrow spans.
+   They must NOT be seven equal boxes and must NOT be a grid.
+   -------------------------------------------------------------------------- */
+.workflow-pipeline-bar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100%;
+  min-height: 46px;
+  padding: 5px 14px !important;
+  gap: 0 !important;
+  overflow: hidden;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+}
+
+.workflow-pipeline-bar .pipeline-step {
+  flex: 0 1 auto !important;
+  min-width: 0 !important;
+  min-height: 34px !important;
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+  padding: 5px 2px !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: 7px !important;
+  white-space: nowrap !important;
+}
+
+/* Reference design uses a quiet pipeline; only the numbered badge carries the active accent. */
+.workflow-pipeline-bar .pipeline-step.active,
+.workflow-pipeline-bar .pipeline-step:hover {
+  background: transparent !important;
+  border-color: transparent !important;
+}
+
+.workflow-pipeline-bar .pipeline-step-badge {
+  flex: 0 0 24px !important;
+  width: 24px !important;
+  height: 24px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  background: var(--bg-subtle) !important;
+  border: 1px solid var(--border-subtle) !important;
+  color: var(--brand-primary) !important;
+  font: 800 .62rem/1 var(--font-mono) !important;
+}
+.workflow-pipeline-bar .pipeline-step.active .pipeline-step-badge {
+  background: var(--brand-primary) !important;
+  border-color: var(--brand-primary) !important;
+  color: var(--text-inverse) !important;
+}
+.workflow-pipeline-bar .pipeline-step-label {
+  display: inline-block !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  color: var(--text-main) !important;
+  font-size: .67rem !important;
+  font-weight: 700 !important;
+  line-height: 1.15 !important;
+  text-align: left !important;
+}
+.workflow-pipeline-bar .pipeline-divider {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  height: auto !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 8px !important;
+  background: transparent !important;
+  color: var(--text-dim) !important;
+  font-size: .72rem !important;
+  line-height: 1 !important;
+  opacity: .55 !important;
+}
+.workflow-pipeline-bar .pipeline-info-box {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Commodity selector — reference uses a compact 5-column card viewport.
+   -------------------------------------------------------------------------- */
+.presets-ribbon {
+  width: 100%;
+  margin-bottom: 22px;
+  padding: 16px !important;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.presets-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  margin-bottom: 10px !important;
+}
+.presets-title-wrap { min-width: 0; }
+.presets-filter-deck {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-bottom: 10px !important;
+}
+.presets-category-filters {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  overflow-x: auto !important;
+  scrollbar-width: none;
+}
+.presets-category-filters::-webkit-scrollbar { display: none; }
+.presets-nested-viewport {
+  width: 100%;
+  max-height: 220px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 2px;
+}
+.presets-clean-grid {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+}
+
+/* Workbench starts beneath the selector as a clean two-pane split. */
+.workbench-grid {
+  display: grid !important;
+  grid-template-columns: minmax(320px, 360px) minmax(0, 1fr) !important;
+  gap: 20px !important;
+  align-items: start !important;
+}
+.sidebar-form-col,
+.workbench-results-col {
+  min-width: 0 !important;
+}
+
+/* Desktop only: preserve the reference's compact composition. */
+@media (min-width: 1101px) {
+  .container {
+    max-width: 1440px;
+    padding-inline: 0;
+  }
+}
+
+@media (max-width: 1100px) {
+  .site-header > .nav-wrap { width: calc(100% - 32px); }
+  .presets-clean-grid { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+}
+
+@media (max-width: 900px) {
+  .workflow-pipeline-bar {
+    justify-content: flex-start !important;
+    overflow-x: auto;
+  }
+  .workflow-pipeline-bar .pipeline-step { flex: 0 0 auto !important; }
+  .workbench-grid { grid-template-columns: 1fr !important; }
+  .presets-clean-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+}
+
+@media (max-width: 650px) {
+  .site-header > .nav-wrap {
+    width: calc(100% - 24px);
+    flex-wrap: wrap;
+  }
+  .nav-links {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+  .presets-header,
+  .presets-filter-deck {
+    align-items: flex-start !important;
+    flex-direction: column !important;
+  }
+  .presets-clean-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+
+@media (max-width: 420px) {
+  .presets-clean-grid { grid-template-columns: 1fr !important; }
+}
+
+
+/* ==========================================================================
+   ANNAKAVACH — Reference Dashboard Layout
+   Dense, balanced desktop composition inspired by the supplied reference UI.
+   This section intentionally overrides older structural rules above.
+   ========================================================================== */
+
+/* ---------- Global desktop frame ---------- */
+html, body {
+  overflow-x: hidden;
+}
+
+.container {
+  width: min(100% - 48px, 1620px) !important;
+  max-width: 1620px !important;
+  margin-inline: auto !important;
+  padding-inline: 0 !important;
+}
+
+.site-header > .nav-wrap {
+  width: min(100% - 48px, 1620px) !important;
+  max-width: 1620px !important;
+  margin-inline: auto !important;
+}
+
+/* ---------- Header: compact, premium, not oversized ---------- */
+.site-header {
+  padding: 9px 0 !important;
+}
+
+.nav-wrap {
+  min-height: 42px;
+  gap: 18px !important;
+}
+
+.brand-logo {
+  gap: 9px !important;
+  flex: 0 0 auto;
+}
+
+.brand-icon {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 9px !important;
+}
+
+.brand-name {
+  font-size: 1.08rem !important;
+}
+
+.brand-sub {
+  font-size: .61rem !important;
+}
+
+.nav-links {
+  gap: 2px !important;
+  flex: 1 1 auto;
+  justify-content: center;
+  min-width: 0;
+}
+
+.nav-link {
+  padding: 7px 11px !important;
+  font-size: .76rem !important;
+  white-space: nowrap;
+}
+
+.nav-actions {
+  flex: 0 0 auto;
+  gap: 7px !important;
+}
+
+/* ---------- Hero ---------- */
+.hero-section {
+  padding: 26px 0 10px !important;
+}
+
+.hero-section .container {
+  position: relative;
+}
+
+.hero-pill-badge {
+  width: fit-content;
+  margin-bottom: 12px !important;
+}
+
+.hero-title {
+  max-width: 1080px !important;
+  font-size: clamp(2rem, 3vw, 3rem) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -.045em !important;
+  margin-bottom: 10px !important;
+}
+
+.hero-lead {
+  max-width: 930px !important;
+  font-size: .84rem !important;
+  line-height: 1.55 !important;
+  margin-bottom: 18px !important;
+}
+
+/* ---------- Seven-stage pipeline ---------- */
+.workflow-pipeline-bar {
+  width: 100% !important;
+  min-height: 60px !important;
+  height: 60px !important;
+  display: grid !important;
+  grid-template-columns:
+    minmax(0, 1fr) 24px
+    minmax(0, 1fr) 24px
+    minmax(0, 1fr) 24px
+    minmax(0, 1fr) 24px
+    minmax(0, 1fr) 24px
+    minmax(0, 1fr) 24px
+    minmax(0, 1fr) !important;
+  align-items: center !important;
+  gap: 0 !important;
+  padding: 5px 8px !important;
+  border-radius: 13px !important;
+  overflow: hidden !important;
+}
+
+.workflow-pipeline-bar .pipeline-step {
+  width: auto !important;
+  min-width: 0 !important;
+  height: 50px !important;
+  min-height: 50px !important;
+  flex: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 9px !important;
+  padding: 0 10px !important;
+  border: 1px solid transparent !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+  white-space: nowrap !important;
+  transition: background .18s ease, border-color .18s ease, transform .18s ease !important;
+}
+
+.workflow-pipeline-bar .pipeline-step:hover {
+  background: var(--bg-subtle) !important;
+  border-color: var(--border-subtle) !important;
+}
+
+.workflow-pipeline-bar .pipeline-step.active {
+  background: var(--brand-light) !important;
+  border-color: var(--brand-primary) !important;
+  box-shadow: inset 0 0 0 1px rgba(16,185,129,.08) !important;
+}
+
+.pipeline-step-badge {
+  width: 25px !important;
+  height: 25px !important;
+  min-width: 25px !important;
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: .62rem !important;
+  font-family: var(--font-mono) !important;
+  font-weight: 800 !important;
+  background: var(--bg-subtle) !important;
+  border: 1px solid var(--border-card) !important;
+  color: var(--text-dim) !important;
+}
+
+.pipeline-step.active .pipeline-step-badge {
+  background: var(--brand-primary) !important;
+  border-color: var(--brand-primary) !important;
+  color: #07100c !important;
+}
+
+.pipeline-step-label {
+  min-width: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  font-size: .70rem !important;
+  font-weight: 750 !important;
+  letter-spacing: -.01em !important;
+}
+
+.pipeline-divider {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  min-width: 0 !important;
+  color: var(--text-dim) !important;
+  opacity: .65 !important;
+  font-size: .9rem !important;
+  font-weight: 500 !important;
+}
+
+/* Elegant info popover when a stage is clicked */
+.pipeline-info-box {
+  margin-top: 8px !important;
+  padding: 12px 15px !important;
+  border-radius: 11px !important;
+  border: 1px solid var(--border-card) !important;
+  background: var(--bg-panel) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.pipeline-info-header {
+  margin-bottom: 5px !important;
+}
+
+.pipeline-info-desc {
+  font-size: .72rem !important;
+  line-height: 1.4 !important;
+}
+
+/* ---------- Commodity library panel ---------- */
+.presets-ribbon {
+  width: 100% !important;
+  margin-top: 20px !important;
+  padding: 16px !important;
+  border-radius: 15px !important;
+  border: 1px solid var(--border-card) !important;
+  background: linear-gradient(
+    145deg,
+    var(--bg-panel),
+    color-mix(in srgb, var(--bg-panel) 82%, var(--brand-primary) 18%)
+  ) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.presets-header {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 410px) !important;
+  align-items: center !important;
+  gap: 18px !important;
+  margin-bottom: 10px !important;
+}
+
+.presets-title-wrap {
+  min-width: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.presets-title-text-group {
+  min-width: 0 !important;
+}
+
+.presets-title {
+  font-size: .80rem !important;
+  font-weight: 800 !important;
+  letter-spacing: .025em !important;
+  text-transform: uppercase !important;
+}
+
+.presets-subtitle {
+  margin-top: 3px !important;
+  font-size: .67rem !important;
+  line-height: 1.35 !important;
+}
+
+.presets-count-badge {
+  flex: 0 0 auto !important;
+  margin-left: 5px !important;
+  padding: 4px 9px !important;
+  border-radius: 999px !important;
+  font-size: .63rem !important;
+  font-family: var(--font-mono) !important;
+  font-weight: 800 !important;
+  white-space: nowrap !important;
+}
+
+/* Search */
+.commodity-search-box {
+  width: 100% !important;
+  height: 40px !important;
+  border-radius: 999px !important;
+}
+
+.commodity-search-input {
+  height: 38px !important;
+  font-size: .72rem !important;
+  padding-left: 39px !important;
+}
+
+/* ---------- Category row ---------- */
+.presets-filter-deck {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin: 0 0 11px !important;
+  min-width: 0 !important;
+}
+
+.presets-filter-label {
+  flex: 0 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  color: var(--text-dim) !important;
+  font-size: .65rem !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: .04em !important;
+}
+
+.presets-category-filters {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+
+.presets-category-filter,
+.cat-chip {
+  flex: 0 0 auto !important;
+  padding: 6px 12px !important;
+  min-height: 31px !important;
+  border-radius: 999px !important;
+  font-size: .66rem !important;
+  white-space: nowrap !important;
+}
+
+/* ---------- Commodity cards ---------- */
+.presets-nested-viewport {
+  width: 100% !important;
+  max-height: 306px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 2px 3px 5px 2px !important;
+  scrollbar-width: thin !important;
+}
+
+.presets-clean-grid {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  align-items: stretch !important;
+}
+
+.presets-clean-card {
+  min-width: 0 !important;
+  min-height: 132px !important;
+  padding: 13px 13px 11px !important;
+  border-radius: 11px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  overflow: hidden !important;
+  background: linear-gradient(
+    150deg,
+    var(--bg-card),
+    color-mix(in srgb, var(--bg-card) 88%, var(--brand-primary) 12%)
+  ) !important;
+}
+
+.presets-clean-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 7px 22px rgba(0,0,0,.16) !important;
+}
+
+.presets-clean-card.selected {
+  box-shadow:
+    0 0 0 1px var(--brand-primary),
+    0 7px 24px rgba(16,185,129,.10) !important;
+}
+
+.presets-card-name {
+  font-size: .76rem !important;
+  line-height: 1.28 !important;
+  font-weight: 800 !important;
+  letter-spacing: -.012em !important;
+}
+
+.presets-card-meta {
+  margin-top: 8px !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 5px !important;
+  font-size: .62rem !important;
+}
+
+.presets-card-meta > * {
+  min-width: 0 !important;
+}
+
+/* ---------- Footer ---------- */
+.presets-footer-controls {
+  margin-top: 11px !important;
+  padding-top: 10px !important;
+  display: grid !important;
+  grid-template-columns: auto auto 1fr !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.presets-footer-status,
+.presets-quick-tip,
+.presets-scroll-hint {
+  font-size: .63rem !important;
+}
+
+.presets-quick-tip {
+  text-align: right !important;
+}
+
+/* ---------- Workbench below selector ---------- */
+#workbench-section {
+  margin-top: 18px !important;
+}
+
+.workbench-grid {
+  display: grid !important;
+  grid-template-columns: minmax(300px, 350px) minmax(0, 1fr) !important;
+  gap: 18px !important;
+  align-items: start !important;
+}
+
+.sidebar-form-col,
+.workbench-results-col {
+  min-width: 0 !important;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1200px) {
+  .container,
+  .site-header > .nav-wrap {
+    width: min(100% - 32px, 1120px) !important;
+  }
+
+  .workflow-pipeline-bar {
+    overflow-x: auto !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    gap: 0 !important;
+  }
+
+  .workflow-pipeline-bar .pipeline-step {
+    flex: 0 0 auto !important;
+    min-width: 155px !important;
+  }
+
+  .pipeline-divider {
+    flex: 0 0 24px !important;
+  }
+
+  .presets-clean-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .presets-header {
+    grid-template-columns: 1fr !important;
+  }
+
+  .presets-clean-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .workbench-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .presets-footer-controls {
+    grid-template-columns: 1fr auto !important;
+  }
+
+  .presets-quick-tip {
+    grid-column: 1 / -1;
+    text-align: left !important;
+  }
+}
+
+@media (max-width: 650px) {
+  .container,
+  .site-header > .nav-wrap {
+    width: calc(100% - 24px) !important;
+  }
+
+  .hero-section {
+    padding-top: 20px !important;
+  }
+
+  .hero-title {
+    font-size: 1.65rem !important;
+  }
+
+  .workflow-pipeline-bar {
+    min-height: 54px !important;
+    height: 54px !important;
+  }
+
+  .workflow-pipeline-bar .pipeline-step {
+    min-width: 142px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+  }
+
+  .presets-ribbon {
+    padding: 12px !important;
+  }
+
+  .presets-clean-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .presets-filter-deck {
+    align-items: flex-start !important;
+    flex-direction: column !important;
+  }
+
+  .presets-category-filters {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .presets-clean-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .presets-footer-controls {
+    grid-template-columns: 1fr !important;
+  }
+
+  .presets-quick-tip {
+    text-align: left !important;
+  }
+}
+
+/* ---------- Print ---------- */
+@media print {
+  .site-header {
+    position: static !important;
+  }
+
+  .workflow-pipeline-bar {
+    overflow: visible !important;
+  }
+
+  .presets-nested-viewport {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}
+
+
+/* ==========================================================================
+   FINAL VISUAL TUNING — HEADER CENTER + LARGER FOOD CATEGORY TYPOGRAPHY
+   ========================================================================== */
+
+/* Keep the main navigation visually centered inside the header */
+.site-header .nav-wrap {
+  position: relative !important;
+}
+
+.site-header .nav-links {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: max-content !important;
+  max-width: 48vw !important;
+  justify-content: center !important;
+  z-index: 2 !important;
+}
+
+.site-header .nav-actions {
+  margin-left: auto !important;
+}
+
+/* Prevent the centered navigation from colliding with brand/actions */
+.site-header .brand-logo,
+.site-header .nav-actions {
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+/* ---------- Food Category / Filter typography ---------- */
+
+.presets-filter-label {
+  font-size: .76rem !important;
+  font-weight: 800 !important;
+  letter-spacing: .045em !important;
+}
+
+.presets-category-filter,
+.cat-chip {
+  min-height: 34px !important;
+  padding: 7px 13px !important;
+  font-size: .74rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -.005em !important;
+}
+
+/* Category row gets slightly more breathing room */
+.presets-filter-deck {
+  gap: 14px !important;
+  margin-bottom: 13px !important;
+}
+
+/* Commodity names */
+.presets-card-name {
+  font-size: .84rem !important;
+  line-height: 1.3 !important;
+  font-weight: 800 !important;
+}
+
+/* Commodity metric text */
+.presets-card-meta {
+  font-size: .68rem !important;
+  line-height: 1.35 !important;
+}
+
+/* Commodity cards themselves */
+.presets-clean-card {
+  min-height: 142px !important;
+  padding: 14px !important;
+}
+
+/* Make the library title/subtitle easier to read */
+.presets-title {
+  font-size: .86rem !important;
+}
+
+.presets-subtitle {
+  font-size: .70rem !important;
+}
+
+/* Search field text */
+.commodity-search-input {
+  font-size: .76rem !important;
+}
+
+/* Keep mobile navigation usable */
+@media (max-width: 900px) {
+  .site-header .nav-links {
+    position: static !important;
+    transform: none !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+}
+
+@media (max-width: 650px) {
+  .presets-category-filter,
+  .cat-chip {
+    font-size: .70rem !important;
+    padding: 7px 11px !important;
+  }
+
+  .presets-card-name {
+    font-size: .80rem !important;
+  }
+}
