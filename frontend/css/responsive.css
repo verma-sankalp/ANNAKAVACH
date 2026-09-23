@@ -341,3 +341,105 @@
     border: 1pt solid #CCCCCC !important;
   }
 }
+
+/* ==========================================================================
+   MOBILE-ONLY COMPACT NAVBAR LAYOUT (Row 1: Logo + Theme | Row 2: 3 Buttons)
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  .site-header {
+    padding: 6px 0 !important;
+  }
+
+  .site-header > .nav-wrap {
+    width: calc(100% - 20px) !important;
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    align-items: center !important;
+    row-gap: 8px !important;
+    column-gap: 8px !important;
+  }
+
+  /* ROW 1 (Left): Logo */
+  .site-header > .nav-wrap > .brand-logo {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    justify-self: start !important;
+    margin: 0 !important;
+  }
+
+  /* Flatten nav-actions so its children can be placed independently */
+  .site-header > .nav-wrap > .nav-actions {
+    display: contents !important;
+  }
+
+  /* ROW 1 (Right): Theme Switcher (Light / Auto / Dark) directly opposite logo */
+  .theme-switch-group,
+  .theme-toggle-group {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    justify-self: end !important;
+    margin: 0 !important;
+  }
+
+  /* ROW 2: All 3 action buttons in one single row */
+  .mode-toggle-group {
+    grid-column: 1 / 2 !important;
+    grid-row: 2 !important;
+    display: flex !important;
+    width: 100% !important;
+    gap: 2px !important;
+  }
+
+  .mode-toggle-group .mode-btn {
+    flex: 1 1 0 !important;
+    padding: 5px 6px !important;
+    font-size: 0.68rem !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+  }
+
+  .mode-toggle-group .mode-btn svg {
+    width: 11px !important;
+    height: 11px !important;
+  }
+
+  #btnExportTopSpec {
+    grid-column: 2 / 3 !important;
+    grid-row: 2 !important;
+    padding: 5px 10px !important;
+    font-size: 0.68rem !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+
+  #btnExportTopSpec svg {
+    width: 11px !important;
+    height: 11px !important;
+  }
+
+  /* ROW 3: Horizontal scrollable navigation tabs */
+  .site-header > .nav-wrap > .nav-links {
+    grid-column: 1 / -1 !important;
+    grid-row: 3 !important;
+    width: 100% !important;
+    display: flex !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    gap: 4px !important;
+    padding: 2px 0 !important;
+  }
+
+  .site-header > .nav-wrap > .nav-links::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .nav-link {
+    flex-shrink: 0 !important;
+    padding: 4px 8px !important;
+    font-size: 0.72rem !important;
+  }
+}
