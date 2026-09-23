@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ANNAKAVACH — Food Packaging Material Recommendation System</title>
+  <meta name="description" content="Annakavach: Algorithmic packaging recommendation, target barrier calculation, MAP gas formulation, kinetic shelf-life simulation, and circular sustainability optimization for food commodities.">
+
+  <!-- Immediate Theme Initialization to Prevent Flash of Unstyled Theme -->
+  <script>
+    (function() {
+      try {
+        var pref = localStorage.getItem('annakavach_theme') || 'light';
+        var resolved = pref;
+        if (pref === 'auto') {
+          resolved = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', resolved);
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Design System & Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Lucide Icons & Chart.js -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- =========================================================================
+       Site Header & Navigation
+       ========================================================================= -->
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a href="#" class="brand-logo" id="navLogo">
+        <div class="brand-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m16.5 9.4-9-5.19M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+            <line x1="12" y1="22.08" x2="12" y2="12"/>
+            <path d="m9 17 2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">ANNAKAVACH</span>
+          <span class="brand-sub">Intelligent Food Packaging</span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="nav-links">
+        <a href="#workbench-section" class="nav-link active" id="navLinkWorkbench">Workbench</a>
+        <a href="#simulator-anchor" class="nav-link" id="navLinkSim">Shelf-Life Simulator</a>
+        <a href="#sustainability-anchor" class="nav-link" id="navLinkEco">Sustainability & PPWR</a>
+        <a href="#catalog-anchor" class="nav-link" id="navLinkCatalog">Material Library</a>
+        <a href="#methodology-anchor" class="nav-link" id="navLinkMethod">Methodology</a>
+      </nav>
+
+      <!-- Nav Actions: Theme Switcher + Mode Switcher + Export -->
+      <div class="nav-actions">
+        <!-- 3-Way Theme Switcher (Light / Dark / Auto) -->
+        <div class="theme-switch-group" id="themeSwitchGroup" title="Color Theme">
+          <button type="button" class="theme-toggle-btn active" id="themeBtnLight" data-theme-val="light" title="Light Theme (Day)" aria-label="Light Theme (Day)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon theme-icon-sun">
+              <circle cx="12" cy="12" r="4"/>
+              <path d="M12 2v2"/>
+              <path d="M12 20v2"/>
+              <path d="m4.93 4.93 1.41 1.41"/>
+              <path d="m17.66 17.66 1.41 1.41"/>
+              <path d="M2 12h2"/>
+              <path d="M20 12h2"/>
+              <path d="m6.34 17.66-1.41 1.41"/>
+              <path d="m19.07 4.93-1.41 1.41"/>
+            </svg>
+          </button>
+          <button type="button" class="theme-toggle-btn" id="themeBtnAuto" data-theme-val="auto" title="System Auto-Detect Theme" aria-label="System Auto-Detect Theme">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon theme-icon-auto">
+              <rect width="20" height="14" x="2" y="3" rx="2"/>
+              <line x1="8" x2="16" y1="21" y2="21"/>
+              <line x1="12" x2="12" y1="17" y2="21"/>
+            </svg>
+          </button>
+          <button type="button" class="theme-toggle-btn" id="themeBtnDark" data-theme-val="dark" title="Dark Theme (Night)" aria-label="Dark Theme (Night)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon theme-icon-moon">
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mode Switcher Pill -->
+        <div class="mode-toggle-group">
+          <button type="button" class="mode-btn active" id="modeBtnEngineer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" x2="20" y1="21" y2="21"/>
+              <line x1="4" x2="20" y1="3" y2="3"/>
+              <line x1="4" x2="20" y1="12" y2="12"/>
+              <line x1="8" x2="8" y1="10" y2="14"/>
+              <line x1="16" x2="16" y1="1" y2="5"/>
+              <line x1="12" x2="12" y1="19" y2="23"/>
+            </svg>
+            Engineer Workbench
+          </button>
+          <button type="button" class="mode-btn" id="modeBtnFarmer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 20h10"/>
+              <path d="M10 20c5.5-2.5.8-6.4 3-10"/>
+              <path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/>
+              <path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/>
+            </svg>
+            Fast Wizard
+          </button>
+        </div>
+
+        <button type="button" class="btn-secondary btn-sm" id="btnExportTopSpec">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
+            <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+            <path d="M10 9H8"/>
+            <path d="M16 13H8"/>
+            <path d="M16 17H8"/>
+          </svg>
+          Export Spec
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       Hero Section
+       ========================================================================= -->
+  <section class="hero-section reveal-on-scroll reveal-fade">
+    <div class="container">
+      <div class="hero-pill-badge">
+        <span class="pulse-dot"></span>
+        <span>Food Packaging Decision Support • Reference Standards & Data</span>
+      </div>
+      <h1 class="hero-title">
+        Intelligent packaging recommendations for <em>extended shelf life</em> & reduced food waste.
+      </h1>
+      <p class="hero-lead">
+        Formulate high-barrier laminate structures, determine target OTR/WVTR specifications, configure Modified Atmosphere Packaging (MAP) gas blends, and assess circular sustainability across 10 standardized food categories.
+      </p>
+
+      <!-- 7-Stage Visual Recommendation Workflow Pipeline Bar (Clickable & Reduced Density) -->
+      <div class="workflow-pipeline-bar reveal-on-scroll reveal-slide-up" id="workflowPipelineBar" role="region" aria-label="7-Stage Algorithmic Packaging Pipeline">
+        <div class="pipeline-step active" data-step="1" role="button" tabindex="0" title="Click to view Stage 1 details">
+          <span class="pipeline-step-badge">1</span>
+          <span class="pipeline-step-label">Food Commodity</span>
+        </div>
+        <span class="pipeline-divider">→</span>
+        <div class="pipeline-step" data-step="2" role="button" tabindex="0" title="Click to view Stage 2 details">
+          <span class="pipeline-step-badge">2</span>
+          <span class="pipeline-step-label">Physico-Chemical</span>
+        </div>
+        <span class="pipeline-divider">→</span>
+        <div class="pipeline-step" data-step="3" role="button" tabindex="0" title="Click to view Stage 3 details">
+          <span class="pipeline-step-badge">3</span>
+          <span class="pipeline-step-label">Storage Logistics</span>
+        </div>
+        <span class="pipeline-divider">→</span>
+        <div class="pipeline-step" data-step="4" role="button" tabindex="0" title="Click to view Stage 4 details">
+          <span class="pipeline-step-badge">4</span>
+          <span class="pipeline-step-label">Target Barrier Calc</span>
+        </div>
+        <span class="pipeline-divider">→</span>
+        <div class="pipeline-step" data-step="5" role="button" tabindex="0" title="Click to view Stage 5 details">
+          <span class="pipeline-step-badge">5</span>
+          <span class="pipeline-step-label">Polymer Match</span>
+        </div>
+        <span class="pipeline-divider">→</span>
+        <div class="pipeline-step" data-step="6" role="button" tabindex="0" title="Click to view Stage 6 details">
+          <span class="pipeline-step-badge">6</span>
+          <span class="pipeline-step-label">MAP & Shelf Life</span>
+        </div>
+        <span class="pipeline-divider">→</span>
+        <div class="pipeline-step" data-step="7" role="button" tabindex="0" title="Click to view Stage 7 details">
+          <span class="pipeline-step-badge">7</span>
+          <span class="pipeline-step-label">Circularity & LCA</span>
+        </div>
+      </div>
+
+      <!-- Interactive Workflow Step Info Popover Box -->
+      <div class="pipeline-info-box" id="pipelineInfoBox" style="display: none;">
+        <div class="pipeline-info-header">
+          <div class="pipeline-info-title-group">
+            <span class="pipeline-info-badge" id="pipeInfoBadge">STAGE 01</span>
+            <span class="pipeline-info-title" id="pipeInfoTitle">Food Commodity Ingestion</span>
+          </div>
+          <button type="button" class="pipeline-info-close" id="pipeInfoClose" title="Close details">✕</button>
+        </div>
+        <p class="pipeline-info-desc" id="pipeInfoDesc">
+          Select from reference commodity database or enter custom perishable attributes.
+        </p>
+        <div class="pipeline-info-meta">
+          <span class="pipe-meta-chip"><strong id="pipeInfoInputLabel">Input:</strong> <span id="pipeInfoInput">Commodity Database</span></span>
+          <span class="pipe-meta-chip"><strong id="pipeInfoOutputLabel">Output:</strong> <span id="pipeInfoOutput">Spoilage Vector Profile</span></span>
+        </div>
+      </div>
+
+      <!-- Recommendation History Ribbon -->
+      <div class="history-ribbon-wrap" id="historyRibbonWrap" style="display: none;">
+        <div class="history-ribbon-title">
+          <i data-lucide="history" style="width: 13px; height: 13px;"></i>
+          Recent Analysis:
+        </div>
+        <div class="history-chips-container" id="historyChipsContainer">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+
+      <!-- Presets & Quick Commodity Selector (Nested Layout Format) -->
+      <div class="presets-ribbon reveal-on-scroll reveal-slide-up" id="commoditySelectorSection">
+
+        <!-- Nested Tier 1: Toolbar Header Deck -->
+        <div class="presets-header">
+          <div class="presets-title-wrap">
+            <div class="presets-icon-badge">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--amber-primary);"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+            </div>
+            <div class="presets-title-text-group">
+              <div class="presets-title">Commodity Reference Library & Presets</div>
+              <div class="presets-subtitle">Calibrated empirical physico-chemical parameters for barrier calculation</div>
+            </div>
+            <span class="presets-count-badge" id="presetsCountBadge">22 Commodities</span>
+          </div>
+
+          <!-- Quick Search Field -->
+          <div class="commodity-search-box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="commoditySearchInput" class="commodity-search-input" placeholder="Search commodity (e.g. Strawberries, Salmon, Cheese)..." autocomplete="off">
+            <button type="button" class="search-clear-btn" id="commoditySearchClear" style="display: none;" title="Clear search">✕</button>
+          </div>
+        </div>
+
+        <!-- Nested Tier 2: Category Filter Bar -->
+        <div class="presets-filter-deck">
+          <div class="presets-filter-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+            <span>Food Category:</span>
+          </div>
+          <div class="presets-category-filters" id="categoryFiltersWrap">
+            <button class="cat-chip active" data-category="ALL">All Categories</button>
+            <button class="cat-chip" data-category="Fresh Produce">🍓 Fresh Produce</button>
+            <button class="cat-chip" data-category="Meat & Poultry">🥩 Meat & Poultry</button>
+            <button class="cat-chip" data-category="Seafood">🐟 Seafood</button>
+            <button class="cat-chip" data-category="Dairy">🧀 Dairy</button>
+            <button class="cat-chip" data-category="Bakery">🍞 Bakery</button>
+            <button class="cat-chip" data-category="Dry Foods & Grains">☕ Dry Foods</button>
+            <button class="cat-chip" data-category="Snacks & Confectionery">🥔 Snacks</button>
+            <button class="cat-chip" data-category="Beverages & Liquids">🫒 Beverages</button>
+            <button class="cat-chip" data-category="Ready-to-Eat (RTE)">🍝 RTE Meals</button>
+            <button class="cat-chip" data-category="Frozen Foods">🥦 Frozen</button>
+          </div>
+        </div>
+
+        <!-- Nested Tier 3: Clean Responsive Commodity Cards Grid in Nested Viewport -->
+        <div class="presets-nested-viewport">
+          <div class="presets-clean-grid" id="presetsScrollGrid">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+
+        <!-- Nested Tier 4: Footer Controls & Status Deck -->
+        <div class="presets-footer-controls" id="presetsFooterControls">
+          <div class="presets-footer-status" id="presetsFooterStatus">
+            <span class="pulse-dot-sm"></span>
+            <span id="presetsDisplayCount">Showing 8 of 22 Commodities</span>
+          </div>
+          <button type="button" class="btn-secondary btn-sm" id="btnToggleMoreCommodities">
+            <span id="toggleMoreText">Show All Commodities (22)</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="toggleMoreIcon"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="presets-quick-tip">
+            <span>💡 Click any card to instant-populate workbench parameters</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       Main Application Shell (Workbench Grid)
+       ========================================================================= -->
+  <main class="container" id="workbench-section">
+
+    <!-- Top Validation Alert Banner (Hidden when inputs are valid) -->
+    <div id="validationAlertBox" style="display: none;" class="validation-alert-banner">
+      <i data-lucide="alert-triangle" style="width: 16px; height: 16px; flex-shrink: 0;"></i>
+      <span id="validationAlertMessage">Please verify input parameters within physical bounds.</span>
+    </div>
+
+    <!-- Top Analysis Loading Banner -->
+    <div id="analysisLoadingBox" style="display: none;" class="analysis-loader-banner">
+      <i data-lucide="loader-2" class="spinner-icon" style="width: 16px; height: 16px;"></i>
+      <span>Evaluating barrier permeation kinetics, MAP equilibrium, and circular suitability...</span>
+    </div>
+
+    <div class="workbench-grid">
+
+      <!-- LEFT COLUMN: Parameter Controls & Inputs -->
+      <aside class="sidebar-form-col reveal-on-scroll reveal-slide-left">
+
+        <!-- FAST WIZARD FOR GROWERS / SMEs (Toggled via header) -->
+        <div class="panel-card" id="farmerWizardSection" style="display: none; border-color: var(--brand-accent);">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <div class="panel-icon" style="background: var(--brand-light); color: var(--brand-primary);">
+                <i data-lucide="sprout" style="width: 16px; height: 16px;"></i>
+              </div>
+              <h3 class="panel-title">Fast Wizard (Growers & SMEs)</h3>
+            </div>
+            <span class="panel-badge" style="background: var(--brand-light); color: var(--brand-primary);">4-Step Flow</span>
+          </div>
+
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.4;">
+            Rapid workflow for growers, artisanal bakers, and pack-houses using calibrated benchmark profiles.
+          </p>
+
+          <div class="form-group">
+            <label class="form-label" for="wizardCommoditySelect">Step 1: Select Harvest / Commodity</label>
+            <select class="form-select" id="wizardCommoditySelect">
+              <option value="" disabled selected>-- Select Food Commodity --</option>
+              <option value="strawberries">Fresh Strawberries (Fresh Produce)</option>
+              <option value="baby-spinach">Baby Spinach & Salad Greens (Fresh Produce)</option>
+              <option value="button-mushrooms">Fresh Button Mushrooms (Fresh Produce)</option>
+              <option value="fresh-beef-steaks">Fresh Red Beef Steaks (Meat & Poultry)</option>
+              <option value="fresh-salmon-fillet">Fresh Atlantic Salmon Fillet (Seafood)</option>
+              <option value="aged-cheddar">Aged Cheddar Cheese Blocks (Dairy)</option>
+              <option value="artisan-bread">Artisan Sourdough & Crusty Bread (Bakery)</option>
+              <option value="roasted-coffee-beans">Whole Roasted Coffee Beans (Dry Foods)</option>
+              <option value="potato-chips">Crispy Fried Potato Chips (Snacks)</option>
+              <option value="extra-virgin-olive-oil">Extra Virgin Olive Oil (Beverages)</option>
+              <option value="fresh-pasta">Fresh Stuffed Tortellini (Ready-to-Eat)</option>
+              <option value="frozen-green-peas">IQF Green Peas (Frozen Foods)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="wizardStorageSelect">Step 2: Planned Storage Regime</label>
+            <select class="form-select" id="wizardStorageSelect">
+              <option value="chilled">Refrigerated Cold Chain (0°C to 4°C)</option>
+              <option value="ambient">Ambient Room Temp (18°C to 22°C)</option>
+              <option value="frozen">Commercial Deep Frozen (-18°C)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="wizardShelfLifeSelect">Step 3: Target Commercial Distribution Span</label>
+            <select class="form-select" id="wizardShelfLifeSelect">
+              <option value="standard">Standard Benchmark Distribution</option>
+              <option value="extended">Extended Export Distribution (+50% Target)</option>
+              <option value="short">Short Local Distribution Cycle</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="wizardPrioritySelect">Step 4: Primary Commercial Priority</label>
+            <select class="form-select" id="wizardPrioritySelect">
+              <option value="max_shelf_life">Maximum Shelf-Life & Protection</option>
+              <option value="eco_friendly">EU PPWR Class A / Bio-Compostable Circularity</option>
+              <option value="low_cost">Lowest Unit Packaging Cost</option>
+            </select>
+          </div>
+
+          <button class="btn-primary-action" id="btnRunWizard">
+            <i data-lucide="zap" style="width: 15px; height: 15px;"></i>
+            Generate Packaging Plan
+          </button>
+        </div>
+
+        <!-- FULL PACKAGING ENGINEER WORKBENCH -->
+        <div class="panel-card" id="engineerControlsCard">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <div class="panel-icon">
+                <i data-lucide="sliders" style="width: 16px; height: 16px;"></i>
+              </div>
+              <h3 class="panel-title">Physico-Chemical Tuning</h3>
+            </div>
+            <button class="btn-secondary btn-sm" id="btnResetDefaults" title="Clear all inputs and reset to blank state">
+              <i data-lucide="rotate-ccw" style="width: 12px; height: 12px;"></i>
+              Reset All
+            </button>
+          </div>
+
+          <form id="packagingWorkbenchForm" onsubmit="return false;">
+
+            <!-- Commodity Name & Category -->
+            <div class="form-group">
+              <label class="form-label" for="inputCommodityName">
+                <span>Commodity Identification</span>
+                <span class="lineage-tag" id="tagLineageCommodity">[Not Selected]</span>
+              </label>
+              <input type="text" class="form-input" id="inputCommodityName" value="" placeholder="e.g. Fresh Strawberries, Salmon, Sourdough...">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inputCategory">Standardized Food Category</label>
+              <select class="form-select" id="inputCategory">
+                <option value="" disabled selected>-- Select Food Category --</option>
+                <option value="Fresh Produce">Fresh Produce</option>
+                <option value="Meat & Poultry">Meat & Poultry</option>
+                <option value="Seafood">Seafood</option>
+                <option value="Dairy">Dairy</option>
+                <option value="Bakery">Bakery</option>
+                <option value="Dry Foods & Grains">Dry Foods & Grains</option>
+                <option value="Snacks & Confectionery">Snacks & Confectionery</option>
+                <option value="Beverages & Liquids">Beverages & Liquids</option>
+                <option value="Ready-to-Eat (RTE)">Ready-to-Eat (RTE)</option>
+                <option value="Frozen Foods">Frozen Foods</option>
+              </select>
+            </div>
+
+            <!-- Intrinsic Properties Group -->
+            <div style="background: var(--bg-subtle); padding: 10px 12px; border-radius: var(--radius-md); margin-bottom: 12px; border: 1px solid var(--border-subtle);">
+              <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--brand-primary); margin-bottom: 8px;">
+                Intrinsic Physico-Chemical Properties
+              </div>
+
+              <!-- Moisture Content Slider -->
+              <div class="form-group">
+                <div class="form-label">
+                  <span>Moisture Content (%)</span>
+                  <span class="form-label-val" id="valMoisture">50.0%</span>
+                </div>
+                <input type="range" class="form-range" id="inputMoisture" min="0" max="100" step="0.5" value="50.0">
+              </div>
+
+              <!-- Water Activity (aw) Slider -->
+              <div class="form-group">
+                <div class="form-label">
+                  <span>Water Activity (a<sub>w</sub>)</span>
+                  <span class="form-label-val" id="valWaterActivity">0.75</span>
+                </div>
+                <input type="range" class="form-range" id="inputWaterActivity" min="0.10" max="1.00" step="0.01" value="0.75">
+                <div class="form-hint">Threshold: a<sub>w</sub> &gt; 0.85 requires pathogen control; a<sub>w</sub> &gt; 0.60 allows mold.</div>
+              </div>
+
+              <!-- Fat Content (%) Slider -->
+              <div class="form-group">
+                <div class="form-label">
+                  <span>Lipid / Fat Content (%)</span>
+                  <span class="form-label-val" id="valFat">5.0%</span>
+                </div>
+                <input type="range" class="form-range" id="inputFat" min="0" max="100" step="0.5" value="5.0">
+              </div>
+
+              <!-- pH Value Slider -->
+              <div class="form-group" style="margin-bottom: 0;">
+                <div class="form-label">
+                  <span>Acidity (pH)</span>
+                  <span class="form-label-val" id="valPH">6.0</span>
+                </div>
+                <input type="range" class="form-range" id="inputPH" min="1.0" max="14.0" step="0.1" value="6.0">
+                <div class="form-hint">Boundary: pH &lt; 4.6 naturally inhibits C. botulinum spore outgrowth.</div>
+              </div>
+            </div>
+
+            <!-- Respiration & Sensitivity Group -->
+            <div style="background: var(--bg-subtle); padding: 10px 12px; border-radius: var(--radius-md); margin-bottom: 12px; border: 1px solid var(--border-subtle);">
+              <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--brand-primary); margin-bottom: 8px;">
+                Respiration & Sensitivity Metrics
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="inputRespiration">Produce Respiration Rate</label>
+                <select class="form-select" id="inputRespiration">
+                  <option value="None">None (Non-respiring matrix)</option>
+                  <option value="Low">Low (Apples, Potatoes, Citrus)</option>
+                  <option value="Moderate">Moderate (Tomatoes, Avocados)</option>
+                  <option value="High">High (Strawberries, Cauliflower)</option>
+                  <option value="Very High">Very High (Spinach, Asparagus)</option>
+                  <option value="Extremely High">Extremely High (Button Mushrooms, Sweet Corn)</option>
+                </select>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="inputLightSensitivity">Light / Photo-Oxidation Sensitivity</label>
+                <select class="form-select" id="inputLightSensitivity">
+                  <option value="Low">Low (Minimal photo-degradation)</option>
+                  <option value="Moderate">Moderate (Pigment fading risk)</option>
+                  <option value="High">High (Lipid / Riboflavin oxidation)</option>
+                  <option value="Critical">Critical (Chlorophyll / Nitrosomyoglobin rapid fade)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Storage & Distribution Logistics -->
+            <div style="background: var(--bg-subtle); padding: 10px 12px; border-radius: var(--radius-md); margin-bottom: 12px; border: 1px solid var(--border-subtle);">
+              <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--brand-primary); margin-bottom: 8px;">
+                Storage Logistics & Package Geometry
+              </div>
+
+              <!-- Storage Class Segmented Control -->
+              <div class="form-group">
+                <label class="form-label">Storage Temperature Class</label>
+                <div class="segmented-control">
+                  <div class="segment-item">
+                    <input type="radio" name="storageTypeRadio" id="regimeChilled" value="chilled" checked>
+                    <label class="segment-label" for="regimeChilled">Chilled</label>
+                  </div>
+                  <div class="segment-item">
+                    <input type="radio" name="storageTypeRadio" id="regimeAmbient" value="ambient">
+                    <label class="segment-label" for="regimeAmbient">Ambient</label>
+                  </div>
+                  <div class="segment-item">
+                    <input type="radio" name="storageTypeRadio" id="regimeFrozen" value="frozen">
+                    <label class="segment-label" for="regimeFrozen">Frozen</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Temperature Slider -->
+              <div class="form-group">
+                <div class="form-label">
+                  <span>Storage Temperature</span>
+                  <span class="form-label-val" id="valTemp">4.0°C</span>
+                </div>
+                <input type="range" class="form-range" id="inputTemp" min="-30" max="50" step="0.5" value="4.0">
+              </div>
+
+              <!-- Relative Humidity Slider -->
+              <div class="form-group">
+                <div class="form-label">
+                  <span>Ambient Humidity (% RH)</span>
+                  <span class="form-label-val" id="valRH">75%</span>
+                </div>
+                <input type="range" class="form-range" id="inputRH" min="10" max="100" step="1" value="75">
+              </div>
+
+              <!-- Target Shelf Life Days -->
+              <div class="form-group">
+                <div class="form-label">
+                  <span>Target Shelf Life (Days)</span>
+                  <span class="form-label-val" id="valShelfLife">14 days</span>
+                </div>
+                <input type="range" class="form-range" id="inputShelfLife" min="1" max="730" step="1" value="14">
+              </div>
+
+              <!-- Pouch Geometry Dimensions -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;" class="form-group">
+                <div>
+                  <label class="form-label" style="font-size:0.72rem;">Width (mm)</label>
+                  <input type="number" class="form-input" id="inputPackWidth" value="150" min="50" max="1000">
+                </div>
+                <div>
+                  <label class="form-label" style="font-size:0.72rem;">Height (mm)</label>
+                  <input type="number" class="form-input" id="inputPackHeight" value="220" min="50" max="1000">
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="inputProductWholesalePrice">Product Wholesale Value ($)</label>
+                <input type="number" class="form-input" id="inputProductWholesalePrice" value="3.50" step="0.10" min="0.10">
+              </div>
+            </div>
+
+            <!-- Run Calculation Button -->
+            <button class="btn-primary-action" id="btnCalculateRecommendation">
+              <i data-lucide="calculator" style="width: 15px; height: 15px;"></i>
+              Run Recommendation Model
+            </button>
+
+          </form>
+        </div>
+      </aside>
+
+      <!-- RIGHT COLUMN: Interactive Recommendation Hub & Results -->
+      <section class="results-container reveal-on-scroll reveal-slide-right">
+
+        <!-- Clean Initial Empty State Container -->
+        <div class="empty-state-card" id="emptyStateContainer">
+          <div class="empty-state-icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+          </div>
+          <h3 class="empty-state-title">No Recommendation Generated Yet</h3>
+          <p class="empty-state-subtitle" id="emptyStateSubtitle">
+            Select a food commodity from the reference library above or enter custom physico-chemical attributes on the left, then click <strong>Run Recommendation Model</strong> to calculate optimal barrier packaging.
+          </p>
+
+          <div class="empty-state-steps-grid">
+            <div class="empty-step-box">
+              <div class="empty-step-num">1</div>
+              <div class="empty-step-content">
+                <div class="empty-step-title">Choose Commodity</div>
+                <div class="empty-step-desc">Pick from 22 calibrated presets or enter custom water activity, pH, and respiration metrics.</div>
+              </div>
+            </div>
+            <div class="empty-step-box">
+              <div class="empty-step-num">2</div>
+              <div class="empty-step-content">
+                <div class="empty-step-title">Set Storage Logistics</div>
+                <div class="empty-step-desc">Specify temperature, ambient relative humidity, and target commercial distribution span.</div>
+              </div>
+            </div>
+            <div class="empty-step-box">
+              <div class="empty-step-num">3</div>
+              <div class="empty-step-content">
+                <div class="empty-step-title">Calculate Barrier Plan</div>
+                <div class="empty-step-desc">Compute Arrhenius kinetics, multi-layer laminate stack, MAP gas equilibrium, and EU PPWR score.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="empty-state-cta">
+            <button type="button" class="btn-secondary btn-sm" id="emptyStateSelectPresetBtn">
+              <i data-lucide="compass" style="width: 14px; height: 14px;"></i>
+              Browse Commodity Reference Library
+            </button>
+          </div>
+        </div>
+
+        <!-- Active Results Container (Rendered on demand after calculation) -->
+        <div id="activeResultsContainer" style="display: none;">
+
+          <!-- Top Engineering Alerts (Dynamic risk warning container) -->
+          <div id="engineeringAlertsContainer"></div>
+
+          <!-- 1. Primary Recommendation Hero Banner Card -->
+          <div class="recommendation-hero-card" id="primaryRecommendationCard">
+            <div class="rec-header">
+              <div>
+                <div class="rec-badge-group">
+                  <span class="badge-top-match">Primary Recommendation</span>
+                  <span class="badge-score" id="heroMatchScore">Packaging Suitability Score: --/100</span>
+                  <span class="panel-badge" id="heroMaterialType">--</span>
+                </div>
+                <h3 class="rec-material-title" id="heroMaterialName">
+                  --
+                </h3>
+              </div>
+              <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
+                <button type="button" class="btn-secondary btn-sm" id="btnResetFromHero" title="Start new analysis">
+                  <i data-lucide="rotate-ccw" style="width: 12px; height: 12px;"></i>
+                  New Analysis
+                </button>
+                <div style="text-align: right;">
+                  <span style="font-size: 0.68rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700;">Modelled Shelf Life</span>
+                  <div style="font-family: var(--font-mono); font-size: 1.4rem; font-weight: 800; color: var(--brand-primary);" id="heroShelfLifeVal">
+                    -- Days
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="rec-layers-formula" id="heroLayerFormula">
+              Structure: --
+            </div>
+
+            <!-- Barrier Triple Metric Tiles with Complete ASTM Units -->
+            <div class="barrier-specs-grid">
+              <div class="spec-tile" title="ASTM D3985 at 23°C, 0% RH, 1 atm O2">
+                <span class="spec-tile-label">Oxygen Barrier (OTR)</span>
+                <span class="spec-tile-val" id="tileOTR">--</span>
+                <span class="spec-tile-unit">cc/m²·day·atm (ASTM D3985)</span>
+              </div>
+              <div class="spec-tile" title="ASTM F1249 at 38°C, 90% RH">
+                <span class="spec-tile-label">Moisture Barrier (WVTR)</span>
+                <span class="spec-tile-val" id="tileWVTR">--</span>
+                <span class="spec-tile-unit">g/m²·day (ASTM F1249)</span>
+              </div>
+              <div class="spec-tile" title="ASTM F88 / F2029 Seal Initiation Temp">
+                <span class="spec-tile-label">Seal Initiation Temp (SIT)</span>
+                <span class="spec-tile-val" id="tileSeal">--</span>
+                <span class="spec-tile-unit">Optimal: 110°C – 135°C</span>
+              </div>
+            </div>
+
+            <!-- 5-Factor Weighted Score Breakdown Panel -->
+            <div class="score-breakdown-panel">
+              <div class="score-breakdown-title">
+                <span>Suitability Score Methodology & Weight Breakdown</span>
+                <span style="font-family: var(--font-mono); color: var(--brand-primary);" id="scoreTotalVal">-- / 100</span>
+              </div>
+              <div class="score-progress-grid">
+                <div class="score-progress-item">
+                  <div class="score-prog-label">
+                    <span>Barrier Match (35%)</span>
+                    <strong id="progValBarrier">--%</strong>
+                  </div>
+                  <div class="score-prog-track">
+                    <div class="score-prog-fill" id="progFillBarrier" style="width: 0%;"></div>
+                  </div>
+                </div>
+                <div class="score-progress-item">
+                  <div class="score-prog-label">
+                    <span>Respiration & Spoilage (25%)</span>
+                    <strong id="progValRespiration">--%</strong>
+                  </div>
+                  <div class="score-prog-track">
+                    <div class="score-prog-fill" id="progFillRespiration" style="width: 0%;"></div>
+                  </div>
+                </div>
+                <div class="score-progress-item">
+                  <div class="score-prog-label">
+                    <span>Temp & Storage (15%)</span>
+                    <strong id="progValStorage">--%</strong>
+                  </div>
+                  <div class="score-prog-track">
+                    <div class="score-prog-fill" id="progFillStorage" style="width: 0%;"></div>
+                  </div>
+                </div>
+                <div class="score-progress-item">
+                  <div class="score-prog-label">
+                    <span>Sustainability & PPWR (15%)</span>
+                    <strong id="progValSust">--%</strong>
+                  </div>
+                  <div class="score-prog-track">
+                    <div class="score-prog-fill" id="progFillSust" style="width: 0%;"></div>
+                  </div>
+                </div>
+                <div class="score-progress-item">
+                  <div class="score-prog-label">
+                    <span>Cost Viability (10%)</span>
+                    <strong id="progValCost">--%</strong>
+                  </div>
+                  <div class="score-prog-track">
+                    <div class="score-prog-fill" id="progFillCost" style="width: 0%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Transparent "Why this recommendation?" Explanation Card (6 Core Factors) -->
+            <div style="margin-top: 14px; border-top: 1px dashed var(--border-subtle); padding-top: 12px;">
+              <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+                <i data-lucide="help-circle" style="width: 14px; height: 14px; color: var(--brand-primary);"></i>
+                <span>Why this recommendation? Core Food Preservation Factors</span>
+              </div>
+              <div class="why-grid" id="whyExplanationGrid">
+                <!-- Populated via JS with 6 distinct factors -->
+              </div>
+            </div>
+
+            <!-- Uncertainty & Model Limitations Callout -->
+            <div style="margin-top: 12px; background: var(--bg-subtle); padding: 8px 12px; border-radius: var(--radius-sm); font-size: 0.72rem; color: var(--text-muted); display: flex; align-items: center; gap: 8px;">
+              <i data-lucide="info" style="width: 14px; height: 14px; color: var(--text-dim); flex-shrink: 0;"></i>
+              <span><strong>Model Limitation Note:</strong> Projections represent mathematical decision-support models based on continuous storage at target temperature. Physical Accelerated Shelf-Life Testing (ASLT) is required prior to commercial packing line commissioning.</span>
+            </div>
+          </div>
+
+          <!-- 2. MAP Gas Formulation & Micro-Perforation Bar -->
+          <div class="map-gauge-box">
+            <div class="map-header">
+              <div class="map-title">
+                <i data-lucide="gauge" style="width: 16px; height: 16px; color: var(--brand-primary);"></i>
+                Modified Atmosphere Packaging (MAP)
+              </div>
+              <div style="display: flex; gap: 6px; align-items: center;">
+                <span class="map-starting-tag">Suggested starting atmosphere</span>
+                <span class="panel-badge" id="mapBadgeType">--</span>
+              </div>
+            </div>
+
+            <!-- Gas Segment Bar -->
+            <div class="gas-fraction-bar">
+              <div class="gas-segment o2" id="gasBarO2" style="width: 3%;" title="Oxygen (O2)">--% O2</div>
+              <div class="gas-segment co2" id="gasBarCO2" style="width: 12%;" title="Carbon Dioxide (CO2)">--% CO2</div>
+              <div class="gas-segment n2" id="gasBarN2" style="width: 85%;" title="Nitrogen (N2)">--% N2</div>
+            </div>
+
+            <div class="gas-legend">
+              <div class="legend-item">
+                <div class="legend-dot" style="background: #E11D48;"></div>
+                <span>Oxygen (O<sub>2</sub>): <strong id="valGasO2">--%</strong></span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot" style="background: #0284C7;"></div>
+                <span>Carbon Dioxide (CO<sub>2</sub>): <strong id="valGasCO2">--%</strong></span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot" style="background: #059669;"></div>
+                <span>Nitrogen (N<sub>2</sub>): <strong id="valGasN2">--%</strong> (Balance)</span>
+              </div>
+              <div class="legend-item" style="margin-left: auto;">
+                <span style="color: var(--text-dim);" id="valGasRatio">Headspace Ratio: 1.5 : 1</span>
+              </div>
+            </div>
+
+            <div class="map-rationale" id="mapRationaleText">
+              --
+            </div>
+
+            <!-- Laser Micro-Perforation Spec Sub-Box -->
+            <div id="perforationSpecWrap" style="margin-top: 10px; padding: 8px 12px; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); font-size: 0.76rem;">
+              <div style="display: flex; align-items: center; gap: 6px; font-weight: 700; color: var(--brand-primary); margin-bottom: 2px;">
+                <i data-lucide="scan" style="width: 13px; height: 13px;"></i>
+                <span>Micro-Perforation Specification:</span>
+              </div>
+              <div id="perforationDetailText" style="color: var(--text-muted);">
+                --
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Deep-Dive Tabbed Panes -->
+          <div class="panel-card" style="padding-top: 14px;">
+            <!-- Detail Tabs Header -->
+            <div class="detail-tabs-nav">
+              <button class="detail-tab-btn active" data-tab="tab-shelf-life">
+                <i data-lucide="trending-down" style="width: 14px; height: 14px;"></i>
+                Shelf-Life Simulator
+              </button>
+              <button class="detail-tab-btn" data-tab="tab-custom-laminate">
+                <i data-lucide="layers" style="width: 14px; height: 14px;"></i>
+                Film Structure Matrix
+              </button>
+              <button class="detail-tab-btn" data-tab="tab-sustainability">
+                <i data-lucide="leaf" style="width: 14px; height: 14px;"></i>
+                Sustainability & PPWR
+              </button>
+              <button class="detail-tab-btn" data-tab="tab-cost">
+                <i data-lucide="dollar-sign" style="width: 14px; height: 14px;"></i>
+                Commercial Cost
+              </button>
+              <button class="detail-tab-btn" data-tab="tab-passport">
+                <i data-lucide="qr-code" style="width: 14px; height: 14px;"></i>
+                QR Digital Passport
+              </button>
+              <button class="detail-tab-btn" data-tab="tab-compare">
+                <i data-lucide="columns" style="width: 14px; height: 14px;"></i>
+                Material Comparison
+              </button>
+            </div>
+
+            <!-- Tab 1: Shelf-Life Kinetic Simulator -->
+            <div class="tab-pane active" id="tab-shelf-life">
+              <div id="simulator-anchor"></div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <div>
+                  <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-main);">Arrhenius Kinetic Quality Decay Simulation</h4>
+                  <p style="font-size: 0.74rem; color: var(--text-muted);">
+                    Temperature-accelerated degradation curves comparing Unpackaged Control, Generic PE, and Annakavach Recommended Barrier.
+                  </p>
+                </div>
+                <span class="panel-badge" style="background: var(--brand-light); color: var(--brand-primary); font-family: var(--font-mono);" id="simDriverBadge">
+                  Arrhenius Q₁₀ = 2.1 Model
+                </span>
+              </div>
+
+              <!-- Chart.js Container -->
+              <div class="chart-container-wrap">
+                <canvas id="shelfLifeChart"></canvas>
+              </div>
+
+              <!-- Simulator Metrics Grid (3 Curves) -->
+              <div class="sim-metrics-grid">
+                <div class="sim-metric-card">
+                  <div class="sim-metric-val" style="color: #E11D48;" id="simValUnpackaged">-- Days</div>
+                  <div class="sim-metric-label">Unpackaged Control (50% Cutoff)</div>
+                </div>
+                <div class="sim-metric-card">
+                  <div class="sim-metric-val" style="color: #0284C7;" id="simValStandard">-- Days</div>
+                  <div class="sim-metric-label">Generic Polyethylene (PE)</div>
+                </div>
+                <div class="sim-metric-card" style="background: var(--brand-light); border-color: var(--brand-accent);">
+                  <div class="sim-metric-val" style="color: var(--brand-primary);" id="simValOptimized">-- Days</div>
+                  <div class="sim-metric-label" style="color: var(--brand-primary); font-weight: 700;">Annakavach Recommended Barrier</div>
+                </div>
+              </div>
+
+              <!-- Model Assumptions Panel -->
+              <div class="assumptions-box" id="simAssumptionsPanel">
+                <div class="assumptions-title">
+                  <i data-lucide="check-circle-2" style="width: 13px; height: 13px; color: var(--brand-primary);"></i>
+                  Model Assumptions & Kinetic Parameters
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 0.72rem;" id="simAssumptionsGrid">
+                  <div>• Initial Quality Index: 100% (Harvest/Pack Baseline)</div>
+                  <div>• Spoilage Rejection Cutoff: 50% Quality Index</div>
+                  <div>• Kinetic Equation: QI(t) = 100 · e^(-k·t)</div>
+                  <div>• Temperature Acceleration: Q₁₀ = 2.1 factor</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab 2: Custom Multi-layer Laminate Structure -->
+            <div class="tab-pane" id="tab-custom-laminate">
+              <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-main); margin-bottom: 2px;" id="laminateStructureTitle">
+                Multi-Layer Engineered Film Cross-Section
+              </h4>
+              <p style="font-size: 0.76rem; color: var(--text-muted); margin-bottom: 10px;" id="laminateRationaleText">
+                Interactive structural cross-section: Outer Structural Layer → Core Barrier → Tie Layers → Sealant Web.
+              </p>
+
+              <!-- Exploded Cross Section Stack -->
+              <div class="laminate-cross-section" id="laminateStackList">
+                <!-- Populated via JS -->
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; background: var(--bg-subtle); padding: 8px 12px; border-radius: var(--radius-sm); font-size: 0.76rem; margin-top: 10px;">
+                <span>Total Thickness: <strong id="laminateTotalThickness">-- µm</strong></span>
+                <span>Target OTR: <strong id="laminateEstimatedOTR">-- cc/m²·day·atm</strong></span>
+                <span>Circular Stream: <strong id="laminateRecyclability" style="color: var(--brand-primary);">--</strong></span>
+              </div>
+            </div>
+
+            <!-- Tab 3: Sustainability & LCA Eco-Scorecard -->
+            <div class="tab-pane" id="tab-sustainability">
+              <div id="sustainability-anchor"></div>
+              <div class="eco-score-banner">
+                <div>
+                  <span style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--brand-primary);">ISO 14040 Life Cycle Assessment (LCA) Scorecard</span>
+                  <h4 style="font-size: 1.1rem; font-weight: 800; color: var(--text-main); margin-top: 2px;" id="ecoMaterialName">
+                    --
+                  </h4>
+                  <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;" id="ecoStreamText">
+                    Stream: --
+                  </p>
+                </div>
+                <div class="eco-circularity-circle">
+                  <span class="eco-score-num" id="ecoScoreNum">--</span>
+                  <span class="eco-score-tag">Circularity</span>
+                </div>
+              </div>
+
+              <div class="eco-stats-list">
+                <div class="eco-stat-item">
+                  <i data-lucide="recycle" class="eco-stat-icon"></i>
+                  <div>
+                    <strong>EU PPWR 2030 Status:</strong>
+                    <div id="ecoPPWRText" style="color: var(--text-muted); margin-top: 2px;">--</div>
+                  </div>
+                </div>
+                <div class="eco-stat-item">
+                  <i data-lucide="shield-check" class="eco-stat-icon"></i>
+                  <div>
+                    <strong>Plastic Packaging Tax (UK/EU):</strong>
+                    <div id="ecoTaxText" style="color: var(--text-muted); margin-top: 2px;">--</div>
+                  </div>
+                </div>
+                <div class="eco-stat-item">
+                  <i data-lucide="cloud" class="eco-stat-icon"></i>
+                  <div>
+                    <strong>Carbon Footprint:</strong>
+                    <div id="ecoCarbonText" style="color: var(--text-muted); margin-top: 2px;">--</div>
+                  </div>
+                </div>
+                <div class="eco-stat-item">
+                  <i data-lucide="tree-pine" class="eco-stat-icon"></i>
+                  <div>
+                    <strong>End-of-Life Sorting:</strong>
+                    <div id="ecoEndOfLifeText" style="color: var(--text-muted); margin-top: 2px;">--</div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 12px; padding: 8px 12px; background: var(--bg-subtle); border-radius: var(--radius-sm); font-size: 0.72rem; color: var(--text-muted);">
+                <strong>LCA System Boundary & Assumptions:</strong> Cradle-to-gate plus End-of-Life mechanical recycling infrastructure in accordance with ISO 14040/14044 guidelines. Functional unit: 1,000 primary food packaging units.
+              </div>
+            </div>
+
+            <!-- Tab 4: Commercial Cost & Economics -->
+            <div class="tab-pane" id="tab-cost">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <div>
+                  <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-main);">Packaging Techno-Economic Cost Model</h4>
+                  <p style="font-size: 0.74rem; color: var(--text-muted);">
+                    Estimated unit costs based on 10,000 unit batch with 8% conversion scrap and 2-color flexographic print.
+                  </p>
+                </div>
+                <span class="panel-badge" style="background: var(--brand-light); color: var(--brand-primary);" id="costHealthBadge">
+                  --
+                </span>
+              </div>
+
+              <table class="cost-breakdown-table">
+                <thead>
+                  <tr>
+                    <th>Cost Component</th>
+                    <th>Spec Detail</th>
+                    <th style="text-align: right;">Cost per Unit ($)</th>
+                    <th style="text-align: right;">Cost / 1,000 Packs ($)</th>
+                  </tr>
+                </thead>
+                <tbody id="costTableBody">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; background: var(--bg-subtle); padding: 8px 12px; border-radius: var(--radius-sm); font-size: 0.76rem;">
+                <span>Batch Area: <strong id="costBatchArea">-- m² / 1,000 packs</strong></span>
+                <span>Packaging Cost vs Product Value: <strong id="costRatioVal" style="color: var(--brand-primary);">--%</strong></span>
+              </div>
+            </div>
+
+            <!-- Tab 5: QR Digital Passport -->
+            <div class="tab-pane" id="tab-passport">
+              <div class="qr-passport-card">
+                <div class="qr-canvas-holder">
+                  <canvas id="passportQRCanvas"></canvas>
+                  <button class="btn-secondary btn-sm" id="btnPrintQRBadge" style="width: 100%; justify-content: center; margin-top: 4px;">
+                    <i data-lucide="printer" style="width: 13px; height: 13px;"></i>
+                    Print Batch Tag
+                  </button>
+                </div>
+
+                <div class="passport-meta-list">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--brand-primary);">Digital Product Passport (DPP)</span>
+                    <span class="panel-badge" id="passportLotBadge">--</span>
+                  </div>
+                  <div class="passport-meta-row">
+                    <span class="passport-meta-label">Food Commodity:</span>
+                    <span class="passport-meta-val" id="ppValCommodity">--</span>
+                  </div>
+                  <div class="passport-meta-row">
+                    <span class="passport-meta-label">Film Structure:</span>
+                    <span class="passport-meta-val" id="ppValMaterial">--</span>
+                  </div>
+                  <div class="passport-meta-row">
+                    <span class="passport-meta-label">Barrier Target:</span>
+                    <span class="passport-meta-val" id="ppValBarrier">--</span>
+                  </div>
+                  <div class="passport-meta-row">
+                    <span class="passport-meta-label">Storage Conditions:</span>
+                    <span class="passport-meta-val" id="ppValStorage">--</span>
+                  </div>
+                  <div class="passport-meta-row">
+                    <span class="passport-meta-label">PPWR Circularity:</span>
+                    <span class="passport-meta-val" id="ppValRecycling">--</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab 6: Side-by-Side Material Comparison -->
+            <div class="tab-pane" id="tab-compare">
+              <h4 style="font-size: 0.92rem; font-weight: 700; color: var(--text-main); margin-bottom: 2px;">Side-by-Side 4-Way Material Comparison Table</h4>
+              <p style="font-size: 0.74rem; color: var(--text-muted); margin-bottom: 10px;">
+                Empirical property ranges tested under ASTM D3985, ASTM F1249, ASTM F88, and EU PPWR 2030 design standards.
+              </p>
+
+              <div style="overflow-x: auto;">
+                <table class="compare-matrix-table" id="compareMatrixTable">
+                  <!-- Populated via JS -->
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- =========================================================================
+         Full Packaging Material Library Catalog Section
+         ========================================================================= -->
+    <section style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border-card);" id="catalog-anchor" class="reveal-on-scroll reveal-slide-up">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+        <div>
+          <div class="presets-title">
+            <i data-lucide="book-open" style="width: 14px; height: 14px; color: var(--brand-primary);"></i>
+            Packaging Material Engineering Library
+          </div>
+          <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.02em; margin-top: 3px;">
+            Polymer, Laminate, Bio-Film & Rigid Tray Catalog
+          </h3>
+          <p style="font-size: 0.78rem; color: var(--text-muted);">
+            Explore property ranges, ASTM test citations, and EU PPWR circularity classifications.
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+          <input type="text" class="form-input" id="catalogSearchInput" placeholder="Search polymers, foil, bio-films..." style="width: 220px;">
+          <select class="form-select" id="catalogTypeFilter" style="width: 160px;">
+            <option value="ALL">All Material Types</option>
+            <option value="Co-extrusion">Co-extrusions</option>
+            <option value="Adhesive Laminate">Adhesive Laminates</option>
+            <option value="Mono-Material Polyolefin">Mono-Material Polyolefins</option>
+            <option value="Tailored Permeability Film">Breathable Produce Films</option>
+            <option value="Compostable Bio-Polymer">Bio-Polymers & Compostables</option>
+            <option value="Thermoformed Rigid Sheet">Rigid Trays & Formats</option>
+            <option value="Inorganic Vitreous Glass">Inert Glass & Tinplate</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Catalog Grid -->
+      <div class="materials-catalog-grid" id="materialsCatalogGrid">
+        <!-- Populated dynamically via JS -->
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         "How Annakavach Works" Methodology & Standards Knowledge Section
+         ========================================================================= -->
+    <section class="methodology-section reveal-on-scroll reveal-slide-up reveal-stagger-parent" id="methodology-anchor">
+      <div class="presets-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--brand-primary);"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg>
+        Scientific Calculation Methodology
+      </div>
+      <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.02em; margin-top: 4px;">
+        How Annakavach Matches Food Degradation Kinetics to Barrier Polymers
+      </h3>
+      <p style="font-size: 0.78rem; color: var(--text-muted); max-width: 820px; line-height: 1.45;">
+        A transparent 4-stage algorithmic pipeline linking biochemical spoilage vectors directly to polymer thermodynamics and international engineering standards.
+      </p>
+
+      <div class="methodology-grid">
+        <div class="methodology-step-card reveal-stagger-item" style="--stagger-idx: 0;">
+          <div class="methodology-step-num">STAGE 01</div>
+          <div class="methodology-step-title">Physico-Chemical Boundary Check</div>
+          <div class="methodology-step-desc">
+            Evaluates water activity (a<sub>w</sub>), pH, lipid fraction, and active respiration against biological limits (<em>C. botulinum</em> pH 4.6 cutoff, pathogen a<sub>w</sub> 0.85 threshold, and anaerobic fermentation risk).
+          </div>
+        </div>
+        <div class="methodology-step-card reveal-stagger-item" style="--stagger-idx: 1;">
+          <div class="methodology-step-num">STAGE 02</div>
+          <div class="methodology-step-title">Target Permeation Calculation</div>
+          <div class="methodology-step-desc">
+            Applies Fick's first law of diffusion and Arrhenius kinetic rate laws to calculate target OTR and WVTR ranges required to protect product quality over the target distribution window.
+          </div>
+        </div>
+        <div class="methodology-step-card reveal-stagger-item" style="--stagger-idx: 2;">
+          <div class="methodology-step-num">STAGE 03</div>
+          <div class="methodology-step-title">Multi-Layer Matching & EMA Modeling</div>
+          <div class="methodology-step-desc">
+            Matches target flux against empirical ASTM D3985 / ASTM F1249 databases. For respiring produce, calculates laser micro-perforation density to achieve Equilibrium Modified Atmosphere (EMA).
+          </div>
+        </div>
+        <div class="methodology-step-card reveal-stagger-item" style="--stagger-idx: 3;">
+          <div class="methodology-step-num">STAGE 04</div>
+          <div class="methodology-step-title">Circularity & Techno-Economics</div>
+          <div class="methodology-step-desc">
+            Scores recyclability under EU PPWR 2030 design-for-recycling guidelines, calculates cradle-to-gate carbon footprint (ISO 14040), and models industrial converting economics per 1,000 units.
+          </div>
+        </div>
+      </div>
+
+      <!-- Regulatory & Engineering Standards Reference Matrix -->
+      <div class="standards-regulatory-deck reveal-on-scroll reveal-slide-up">
+        <div class="standards-deck-header">
+          <div>
+            <div class="presets-title">
+              <i data-lucide="shield-check" style="width: 14px; height: 14px; color: var(--brand-primary);"></i>
+              Authoritative Testing Standards & Regulatory Frameworks
+            </div>
+            <h4 class="standards-deck-title">
+              International Barrier Testing, Safety & Circularity Compliance Protocols
+            </h4>
+            <p class="standards-deck-subtitle">
+              Computational validation models aligned with globally recognized ASTM, ISO, European Commission, and US FDA analytical methodologies.
+            </p>
+          </div>
+          <div class="standards-stat-pill">
+            <span class="standards-stat-dot"></span>
+            <span>6 Global Protocols Verified</span>
+          </div>
+        </div>
+
+        <div class="standards-reference-grid">
+          <!-- Card 1: ASTM D3985 OTR -->
+          <div class="standard-ref-card standard-card-otr reveal-stagger-item" style="--stagger-idx: 0;">
+            <div class="standard-card-head">
+              <div class="standard-badge-wrap">
+                <span class="standard-code-badge badge-otr">ASTM D3985</span>
+                <span class="standard-authority-tag">ASTM International</span>
+              </div>
+              <div class="standard-icon-circle icon-otr">
+                <i data-lucide="activity" style="width: 16px; height: 16px;"></i>
+              </div>
+            </div>
+            <div class="standard-title">Coulometric Oxygen Transmission Rate (OTR)</div>
+            <p class="standard-desc">
+              Standard test method for oxygen gas transmission rate through plastic film and sheeting using a <strong>coulometric sensor</strong> at specified carrier gas equilibrium conditions.
+            </p>
+            <div class="standard-spec-strip">
+              <span class="standard-spec-item"><i data-lucide="thermometer" style="width: 11px; height: 11px;"></i> 23°C</span>
+              <span class="standard-spec-item"><i data-lucide="droplet" style="width: 11px; height: 11px;"></i> 0% / 50% RH</span>
+              <span class="standard-spec-item"><i data-lucide="gauge" style="width: 11px; height: 11px;"></i> 1 atm</span>
+              <span class="standard-spec-unit">cc/m²·day·atm</span>
+            </div>
+          </div>
+
+          <!-- Card 2: ASTM F1249 WVTR -->
+          <div class="standard-ref-card standard-card-wvtr reveal-stagger-item" style="--stagger-idx: 1;">
+            <div class="standard-card-head">
+              <div class="standard-badge-wrap">
+                <span class="standard-code-badge badge-wvtr">ASTM F1249</span>
+                <span class="standard-authority-tag">ASTM International</span>
+              </div>
+              <div class="standard-icon-circle icon-wvtr">
+                <i data-lucide="droplets" style="width: 16px; height: 16px;"></i>
+              </div>
+            </div>
+            <div class="standard-title">Infrared Water Vapor Transmission Rate (WVTR)</div>
+            <p class="standard-desc">
+              Standard test method for water vapor transmission rate through barrier films and laminates using a <strong>modulated infrared sensor</strong> for precise moisture flux quantification.
+            </p>
+            <div class="standard-spec-strip">
+              <span class="standard-spec-item"><i data-lucide="thermometer" style="width: 11px; height: 11px;"></i> 37.8°C (100°F)</span>
+              <span class="standard-spec-item"><i data-lucide="droplet" style="width: 11px; height: 11px;"></i> 90% RH</span>
+              <span class="standard-spec-unit">g/m²·day</span>
+            </div>
+          </div>
+
+          <!-- Card 3: EU PPWR 2030 -->
+          <div class="standard-ref-card standard-card-ppwr reveal-stagger-item" style="--stagger-idx: 2;">
+            <div class="standard-card-head">
+              <div class="standard-badge-wrap">
+                <span class="standard-code-badge badge-ppwr">EU PPWR 2030</span>
+                <span class="standard-authority-tag">European Parliament</span>
+              </div>
+              <div class="standard-icon-circle icon-ppwr">
+                <i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i>
+              </div>
+            </div>
+            <div class="standard-title">Packaging & Packaging Waste Regulation (COM/2022/677)</div>
+            <p class="standard-desc">
+              Design for recycling mandates establishing recyclability performance tiers: <strong>Class A (≥95% by weight)</strong> and <strong>Class B (≥80% by weight)</strong> mono-material stream compliance.
+            </p>
+            <div class="standard-spec-strip">
+              <span class="standard-spec-item"><i data-lucide="check-circle-2" style="width: 11px; height: 11px;"></i> Class A ≥95%</span>
+              <span class="standard-spec-item"><i data-lucide="check-circle" style="width: 11px; height: 11px;"></i> Class B ≥80%</span>
+              <span class="standard-spec-unit">PPWR 2030</span>
+            </div>
+          </div>
+
+          <!-- Card 4: ISO 14040 / 14044 -->
+          <div class="standard-ref-card standard-card-lca reveal-stagger-item" style="--stagger-idx: 3;">
+            <div class="standard-card-head">
+              <div class="standard-badge-wrap">
+                <span class="standard-code-badge badge-lca">ISO 14040 / 14044</span>
+                <span class="standard-authority-tag">ISO Standard</span>
+              </div>
+              <div class="standard-icon-circle icon-lca">
+                <i data-lucide="globe" style="width: 16px; height: 16px;"></i>
+              </div>
+            </div>
+            <div class="standard-title">Life Cycle Assessment (LCA) Framework</div>
+            <p class="standard-desc">
+              <strong>Cradle-to-gate</strong> environmental footprint modeling, polymer resin carbon intensity evaluation, and end-of-life recovery pathway impact accounting.
+            </p>
+            <div class="standard-spec-strip">
+              <span class="standard-spec-item"><i data-lucide="leaf" style="width: 11px; height: 11px;"></i> Cradle-to-Gate</span>
+              <span class="standard-spec-item"><i data-lucide="scale" style="width: 11px; height: 11px;"></i> Carbon Footprint</span>
+              <span class="standard-spec-unit">kg CO₂e/kg</span>
+            </div>
+          </div>
+
+          <!-- Card 5: FDA 21 CFR / EU 10/2011 -->
+          <div class="standard-ref-card standard-card-safety reveal-stagger-item" style="--stagger-idx: 4;">
+            <div class="standard-card-head">
+              <div class="standard-badge-wrap">
+                <span class="standard-code-badge badge-safety">FDA 21 CFR / EU 10/2011</span>
+                <span class="standard-authority-tag">FDA & EFSA Mandate</span>
+              </div>
+              <div class="standard-icon-circle icon-safety">
+                <i data-lucide="shield" style="width: 16px; height: 16px;"></i>
+              </div>
+            </div>
+            <div class="standard-title">Food Contact Materials & Migration Safety</div>
+            <p class="standard-desc">
+              Regulatory compliance governing <strong>Specific Migration Limits (SML)</strong> and <strong>Overall Migration Limits (OML &lt; 10 mg/dm²)</strong> for primary food-contact polymers and sealants.
+            </p>
+            <div class="standard-spec-strip">
+              <span class="standard-spec-item"><i data-lucide="shield-alert" style="width: 11px; height: 11px;"></i> OML &lt; 10 mg/dm²</span>
+              <span class="standard-spec-item"><i data-lucide="check" style="width: 11px; height: 11px;"></i> SML Verified</span>
+              <span class="standard-spec-unit">21 CFR 177</span>
+            </div>
+          </div>
+
+          <!-- Card 6: DIN EN 13432 -->
+          <div class="standard-ref-card standard-card-compost reveal-stagger-item" style="--stagger-idx: 5;">
+            <div class="standard-card-head">
+              <div class="standard-badge-wrap">
+                <span class="standard-code-badge badge-compost">DIN EN 13432</span>
+                <span class="standard-authority-tag">DIN CERTCO / TÜV</span>
+              </div>
+              <div class="standard-icon-circle icon-compost">
+                <i data-lucide="sprout" style="width: 16px; height: 16px;"></i>
+              </div>
+            </div>
+            <div class="standard-title">Industrial & Home Composting Certification</div>
+            <p class="standard-desc">
+              Harmonized European standard for packaging recoverable through organic composting and biodegradation with <strong>≥90% disintegration within 12 weeks</strong>.
+            </p>
+            <div class="standard-spec-strip">
+              <span class="standard-spec-item"><i data-lucide="clock" style="width: 11px; height: 11px;"></i> ≤ 12 Weeks</span>
+              <span class="standard-spec-item"><i data-lucide="sparkles" style="width: 11px; height: 11px;"></i> ≥90% Biodegr.</span>
+              <span class="standard-spec-unit">EN 13432</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scientific Decision-Support Disclaimer Banner -->
+    <div class="disclaimer-banner reveal-on-scroll reveal-fade">
+      <strong>Scientific Decision-Support Notice:</strong> ANNAKAVACH's recommendations and kinetic shelf-life simulations are computational models intended for early-stage engineering formulation and feasibility analysis. Commercial food packaging applications must undergo physical Accelerated Shelf-Life Testing (ASLT) and regulatory migration compliance testing (e.g. EU 10/2011, FDA 21 CFR 177) prior to industrial roll-out.
+    </div>
+
+  </main>
+
+  <!-- =========================================================================
+       Technical Specification Sheet Export Modal
+       ========================================================================= -->
+  <div id="specSheetModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 20px;">
+    <div style="background: var(--bg-surface); width: 100%; max-width: 820px; max-height: 90vh; border-radius: var(--radius-lg); border: 1px solid var(--border-card); box-shadow: var(--shadow-float); display: flex; flex-direction: column; overflow: hidden;">
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; background: var(--bg-subtle);">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <i data-lucide="file-check" style="width: 18px; height: 18px; color: var(--brand-primary);"></i>
+          <span style="font-weight: 800; font-size: 1rem; color: var(--text-main);">Technical Packaging Specification Document</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn-primary-action" id="btnPrintModalDoc" style="padding: 5px 12px; font-size: 0.78rem; margin: 0; width: auto;">
+            <i data-lucide="printer" style="width: 13px; height: 13px;"></i>
+            Print / Save PDF
+          </button>
+          <button class="btn-secondary btn-sm" id="btnCloseSpecModal">
+            <i data-lucide="x" style="width: 13px; height: 13px;"></i>
+          </button>
+        </div>
+      </div>
+
+      <div style="padding: 22px; overflow-y: auto; font-family: var(--font-sans); color: var(--text-main);" id="printableSpecContent">
+        <!-- Populated dynamically via JS with formal ASTM spec sheet layout -->
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       Footer
+       ========================================================================= -->
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div class="brand-icon" style="width: 26px; height: 26px;">
+          <i data-lucide="package-check" style="width: 14px; height: 14px;"></i>
+        </div>
+        <div>
+          <strong style="color: var(--text-main);">ANNAKAVACH</strong> — Intelligent Food Packaging
+        </div>
+      </div>
+      <div>
+        Built with food preservation kinetics, ASTM/ISO standards, and circular design principles.
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       Application Scripts
+       ========================================================================= -->
+  <script src="js/utils/formatting.js"></script>
+  <script src="js/utils/validation.js"></script>
+  <script src="js/utils/api.js"></script>
+  <script src="js/data/foodDatabase.js"></script>
+  <script src="js/data/packagingMaterials.js"></script>
+  <script src="js/engines/recommendationEngine.js"></script>
+  <script src="js/engines/shelfLifeSimulator.js"></script>
+  <script src="js/engines/sustainabilityEngine.js"></script>
+  <script src="js/engines/costEngine.js"></script>
+  <script src="js/engines/qrTraceability.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
