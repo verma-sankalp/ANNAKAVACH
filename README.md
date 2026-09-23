@@ -2,6 +2,7 @@
 
 # SIH Project (2026)
    S.No.                   - 236
+   Organization            - Ministry of Food Processing Industries (MoFPI)
    Problem Statement Title - Al-Based Intelligent Food Packaging Material Recommendation System for Food Commodities
    Category                - Software
    PS.No.                  - SIH26236
