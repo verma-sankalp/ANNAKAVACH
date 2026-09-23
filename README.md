@@ -70,6 +70,10 @@ ANNAKAVACH/
 ├── serve.bat                    # Windows one-click local launcher
 ├── .gitignore                   # Version control security exemptions
 │
+├── tests/                       # Automated security & server tests
+|   ├── test_live_http.py        # Live HTTP server integration tests
+|   └── test_security.py         # Security & path validation tests
+│
 ├── backend/                     # Protected Server-Side Architecture (No source leakage)
 │   ├── app.py                   # Secure HTTP application server & static file jail
 │   ├── config.py                # Server runtime configuration & security policies
