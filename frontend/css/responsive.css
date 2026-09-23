@@ -24,11 +24,11 @@
 
 /* --- Tablet (768px) --- */
 @media (max-width: 768px) {
-  .pipeline-steps-wrap {
+  .workflow-pipeline-bar {
     grid-template-columns: repeat(4, 1fr);
   }
 
-  .rec-specs-grid {
+  .barrier-specs-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -53,7 +53,7 @@
     grid-template-columns: 1fr;
   }
 
-  .hero-title-wrap {
+  .hero-title-wrap, .hero-title-block {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -80,28 +80,28 @@
     justify-content: space-between;
   }
 
-  .pipeline-steps-wrap {
+  .workflow-pipeline-bar {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .radio-card-group {
+  .radio-card-grid {
     grid-template-columns: 1fr;
   }
 
-  .rec-header-row {
+  .rec-header {
     flex-direction: column;
   }
 
-  .suitability-circle {
+  .rec-score-circle {
     margin-top: 8px;
   }
 
-  .ribbon-top-bar {
+  .presets-header {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .search-input-wrap {
+  .commodity-search-box {
     width: 100%;
   }
 
@@ -134,7 +134,7 @@
     font-size: 1.5rem;
   }
 
-  .rec-specs-grid {
+  .barrier-specs-grid {
     grid-template-columns: 1fr;
   }
 
@@ -204,7 +204,7 @@
     page-break-inside: avoid;
   }
 
-  .suitability-circle,
+  .rec-score-circle,
   .eco-circularity-circle {
     border: 1pt solid #000000 !important;
     color: #000000 !important;
@@ -229,4 +229,42 @@
     flex-direction: row !important;
     border: 1pt solid #CCCCCC !important;
   }
+}
+
+
+/* --- Current ANNAKAVACH component names --- */
+@media (max-width: 1080px) {
+  .workbench-grid { grid-template-columns: 320px minmax(0, 1fr); gap: 16px; }
+  .presets-clean-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 900px) {
+  .workbench-grid { grid-template-columns: 1fr; }
+  .sidebar-form-col, .workbench-results-col { width: 100%; }
+  .presets-clean-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .workflow-pipeline-bar { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .pipeline-divider { display: none; }
+}
+
+@media (max-width: 650px) {
+  .container { padding-left: 16px; padding-right: 16px; }
+  .nav-wrap { flex-wrap: wrap; }
+  .nav-links { order: 3; width: 100%; overflow-x: auto; }
+  .nav-actions { width: 100%; flex-wrap: wrap; }
+  .presets-filter-deck { flex-direction: column; align-items: stretch; }
+  .presets-clean-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .empty-state-steps-grid { grid-template-columns: 1fr; }
+  .barrier-specs-grid { grid-template-columns: 1fr; }
+  .workflow-pipeline-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .presets-quick-tip { width: 100%; margin-left: 0; }
+  .rec-header { flex-direction: column; }
+}
+
+@media (max-width: 480px) {
+  html { font-size: 13.5px; }
+  .hero-title { font-size: 1.5rem; }
+  .presets-clean-grid { grid-template-columns: 1fr; }
+  .empty-state-cta { flex-direction: column; width: 100%; }
+  .empty-state-cta button { width: 100%; }
+  .workflow-pipeline-bar { grid-template-columns: 1fr 1fr; }
 }
