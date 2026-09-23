@@ -5,7 +5,7 @@ ROOT_DIR = os.path.dirname(BACKEND_DIR)
 FRONTEND_DIR = os.path.join(ROOT_DIR, "frontend")
 
 HOST = os.environ.get("ANNAKAVACH_HOST", "127.0.0.1")
-PORT = int(os.environ.get("ANNAKAVACH_PORT", 8080))
+PORT = int(os.environ.get("PORT", os.environ.get("ANNAKAVACH_PORT", 8080)))
 DEBUG = os.environ.get("ANNAKAVACH_DEBUG", "0").lower() in ("1", "true", "yes")
 
 SECURITY_HEADERS = {
