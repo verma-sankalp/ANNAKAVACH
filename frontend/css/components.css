@@ -1683,3 +1683,26 @@ html[data-theme="dark"] .preset-metric-cell {
 html[data-theme="dark"] .preset-metric-val {
   color: #F2F6F4 !important;
 }
+
+/* Range Slider Thumb Click Bounce */
+.form-range::-webkit-slider-thumb {
+  transition: transform 0.14s cubic-bezier(0.175, 0.885, 0.32, 1.2),
+              box-shadow 0.14s ease !important;
+}
+
+.form-range:active::-webkit-slider-thumb {
+  transform: scale(1.22) !important;
+}
+
+/* Segmented Storage Option Controls */
+.segmented-control .segment-item label,
+.radio-card {
+  transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.12s ease !important;
+  will-change: transform;
+}
+
+.segmented-control .segment-item label:active,
+.radio-card:active {
+  transform: scale(0.96) !important;
+}
