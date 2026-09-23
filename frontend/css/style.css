@@ -1,0 +1,493 @@
+/* ==========================================================================
+   Annakavach — Food Packaging Material Recommendation System
+   Core Design System, Theme Tokens, Base Resets, Forms & Micro-Animations
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* --- CSS Variables: Light Palette --- */
+:root,
+html[data-theme="light"],
+:root[data-theme="light"] {
+  --bg-app: #F7FAF8;
+  --bg-panel: #FFFFFF;
+  --bg-surface: #FFFFFF;
+  --bg-card: #F1F6F3;
+  --bg-subtle: #EBF2EE;
+  --bg-muted: #E2ECE7;
+  --bg-dark: #101815;
+  --bg-header: rgba(247, 250, 248, 0.96);
+  --bg-card-gradient: none;
+
+  /* Text & Contrast */
+  --text-main: #111815;
+  --text-muted: #4B5A53;
+  --text-dim: #708078;
+  --text-inverse: #FFFFFF;
+
+  /* Botanical & Warm Accents */
+  --brand-primary: #1D4333;
+  --brand-primary-hover: #163628;
+  --brand-light: #E6F2EB;
+  --brand-accent: #2E6B52;
+
+  --amber-primary: #D97706;
+  --amber-light: #FEF3C7;
+  --amber-border: #FCD34D;
+
+  --terracotta: #C2410C;
+  --terracotta-light: #FFEDD5;
+
+  --blue-primary: #2563EB;
+  --blue-light: #EFF6FF;
+
+  /* Borders & Shadows */
+  --border-subtle: #E1E9E4;
+  --border-card: #D0DDD6;
+  --border-focus: #1D4333;
+
+  --shadow-xs: 0 1px 2px rgba(16, 24, 21, 0.03);
+  --shadow-sm: 0 1px 3px rgba(16, 24, 21, 0.05);
+  --shadow-md: 0 4px 12px rgba(16, 24, 21, 0.06);
+  --shadow-lg: 0 8px 20px rgba(16, 24, 21, 0.08);
+  --shadow-float: 0 14px 28px rgba(16, 24, 21, 0.1);
+
+  /* Chart & Canvas Theme Tokens */
+  --chart-grid: #EBF2EE;
+  --chart-text: #4B5A53;
+  --qr-dot: #1D4333;
+  --qr-bg: #FFFFFF;
+}
+
+/* --- CSS Variables: Dark Palette --- */
+html[data-theme="dark"],
+:root[data-theme="dark"] {
+  --bg-app: #080D0B;
+  --bg-panel: #101815;
+  --bg-surface: #101815;
+  --bg-card: #14201B;
+  --bg-subtle: #14201B;
+  --bg-muted: #1A2822;
+  --bg-dark: #040706;
+  --bg-header: rgba(8, 13, 11, 0.96);
+  --bg-card-gradient: none;
+
+  /* Text & Contrast */
+  --text-main: #F2F6F4;
+  --text-muted: #8E9E96;
+  --text-dim: #64756D;
+  --text-inverse: #080D0B;
+
+  /* Annakavach Green Accents */
+  --brand-primary: #10B981;
+  --brand-primary-hover: #059669;
+  --brand-light: #11281E;
+  --brand-accent: #34D399;
+
+  --amber-primary: #F59E0B;
+  --amber-light: #241D0F;
+  --amber-border: #78350F;
+
+  --terracotta: #F97316;
+  --terracotta-light: #28170F;
+
+  --blue-primary: #3B82F6;
+  --blue-light: #111D36;
+
+  /* Borders & Shadows */
+  --border-subtle: #1B2923;
+  --border-card: #24352D;
+  --border-focus: #10B981;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.55);
+  --shadow-float: 0 16px 36px rgba(0, 0, 0, 0.65);
+
+  /* Chart & Canvas Theme Tokens */
+  --chart-grid: #1A2822;
+  --chart-text: #8E9E96;
+  --qr-dot: #10B981;
+  --qr-bg: #101815;
+}
+
+/* --- Shared Constants --- */
+:root {
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 9999px;
+
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.2);
+}
+
+/* ==========================================================================
+   Base Resets & Global Defaults
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 14.5px;
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background-color var(--transition-smooth), color var(--transition-smooth);
+}
+
+/* Subtle editorial paper grain effect */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: radial-gradient(var(--border-subtle) 0.75px, transparent 0.75px);
+  background-size: 24px 24px;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: -1;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+/* ==========================================================================
+   Form Controls, Inputs, Sliders & Radios
+   ========================================================================== */
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.form-label {
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-value-tag {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: var(--brand-primary);
+  background: var(--brand-light);
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+}
+
+.form-input, .form-select {
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  font-size: 0.82rem;
+  transition: var(--transition-fast);
+  outline: none;
+}
+
+.form-input:focus, .form-select:focus {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px var(--brand-light);
+}
+
+.form-hint {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-top: 4px;
+  line-height: 1.35;
+}
+
+/* Custom Range Slider */
+.form-range {
+  width: 100%;
+  height: 6px;
+  -webkit-appearance: none;
+  background: var(--border-subtle);
+  border-radius: 3px;
+  outline: none;
+  margin: 6px 0;
+}
+
+.form-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--brand-primary);
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-range:active::-webkit-slider-thumb {
+  transform: scale(1.3);
+  box-shadow: 0 0 0 6px var(--brand-light), 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.form-range::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--brand-primary);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-range:active::-moz-range-thumb {
+  transform: scale(1.3);
+  box-shadow: 0 0 0 6px var(--brand-light), 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* Radio Card Groups */
+.radio-card-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.radio-card {
+  position: relative;
+  border: 1px solid var(--border-card);
+  background: var(--bg-surface);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: var(--transition-fast);
+}
+
+.radio-card input {
+  position: absolute;
+  opacity: 0;
+}
+
+.radio-card:hover {
+  border-color: var(--brand-accent);
+  background: var(--bg-subtle);
+}
+
+.radio-card:has(input:checked) {
+  border-color: var(--brand-primary);
+  background: var(--brand-light);
+  font-weight: 700;
+}
+
+.radio-card-title {
+  font-size: 0.78rem;
+  color: var(--text-main);
+  display: block;
+}
+
+.radio-card-sub {
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  display: block;
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   Buttons & Interactive Trigger Elements
+   ========================================================================== */
+.btn-primary-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 16px;
+  background: var(--brand-primary);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+html[data-theme="dark"] .btn-primary-action {
+  color: #070A09;
+}
+
+.btn-primary-action:hover {
+  background: var(--brand-primary-hover);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.btn-primary-action:active {
+  transform: scale(0.96) translateY(1px);
+  box-shadow: var(--shadow-xs);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-subtle);
+  border-color: var(--border-focus);
+}
+
+.btn-secondary:active {
+  transform: scale(0.95) translateY(1px);
+  background: var(--border-subtle);
+}
+
+.btn-sm {
+  padding: 4px 8px;
+  font-size: 0.72rem;
+}
+
+.btn-calc-pulse {
+  animation: btnPulseGlow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes btnPulseGlow {
+  0% { transform: scale(0.97); }
+  50% { transform: scale(1.02); box-shadow: 0 0 16px rgba(29, 67, 51, 0.4); }
+  100% { transform: scale(1); }
+}
+
+html[data-theme="dark"] .btn-calc-pulse {
+  animation: btnPulseGlowDark 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes btnPulseGlowDark {
+  0% { transform: scale(0.97); }
+  50% { transform: scale(1.02); box-shadow: 0 0 16px rgba(52, 211, 153, 0.5); }
+  100% { transform: scale(1); }
+}
+
+/* ==========================================================================
+   Micro-Interactions, Ripple & Scroll Reveals
+   ========================================================================== */
+.ripple-target {
+  position: relative;
+  overflow: hidden;
+}
+
+.click-ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: rippleAnimation 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(29, 67, 51, 0.28) 0%, rgba(29, 67, 51, 0.06) 65%, transparent 100%);
+  z-index: 10;
+}
+
+html[data-theme="dark"] .click-ripple {
+  background: radial-gradient(circle, rgba(52, 211, 153, 0.35) 0%, rgba(52, 211, 153, 0.08) 65%, transparent 100%);
+}
+
+@keyframes rippleAnimation {
+  0% { transform: scale(0); opacity: 0.85; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+.click-bounce-anim {
+  animation: btnClickBounce 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes btnClickBounce {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+/* Viewport Scroll Entry Reveals */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.reveal-slide-up {
+  transform: translateY(32px);
+}
+
+.reveal-on-scroll.reveal-fade {
+  transform: translateY(0);
+}
+
+.reveal-on-scroll.reveal-scale {
+  transform: scale(0.96) translateY(20px);
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0) translateX(0) scale(1);
+}
+
+.reveal-stagger-parent .reveal-stagger-item {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--stagger-idx, 0) * 0.075s);
+  will-change: opacity, transform;
+}
+
+.reveal-stagger-parent.is-revealed .reveal-stagger-item {
+  opacity: 1;
+  transform: translateY(0);
+}
