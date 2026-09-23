@@ -33,7 +33,7 @@
 }
 
 /* =========================================================
-   NAVBAR 
+   NAVBAR — Balanced 3-Zone Layout
    ========================================================= */
 
 .nav-wrap {
@@ -2174,11 +2174,11 @@ html, body {
     font-size: .80rem !important;
   }
 }
-
 /* ==========================================================================
-   FINAL NAVBAR ALIGNMENT OVERRIDE
+   FINAL NAVBAR ALIGNMENT — DESKTOP + MOBILE
    ========================================================================== */
 
+/* Desktop: three balanced zones. */
 @media (min-width: 901px) {
   .site-header > .nav-wrap {
     width: min(100% - 64px, 1520px) !important;
@@ -2186,7 +2186,7 @@ html, body {
     margin-inline: auto !important;
 
     display: grid !important;
-    grid-template-columns: 260px minmax(0, 1fr) 520px !important;
+    grid-template-columns: minmax(230px, 260px) minmax(0, 1fr) auto !important;
     align-items: center !important;
     column-gap: 20px !important;
     row-gap: 0 !important;
@@ -2204,7 +2204,7 @@ html, body {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 4px !important;
+    gap: 3px !important;
     white-space: nowrap !important;
   }
 
@@ -2214,17 +2214,128 @@ html, body {
     display: flex !important;
     align-items: center !important;
     justify-content: flex-end !important;
-    gap: 8px !important;
+    gap: 7px !important;
     white-space: nowrap !important;
   }
 }
 
+/* Tablet/mobile: brand + controls on one compact row, navigation below. */
 @media (max-width: 900px) {
+  .site-header {
+    padding: 10px 0 !important;
+  }
+
   .site-header > .nav-wrap {
+    width: calc(100% - 32px) !important;
+    max-width: none !important;
+    margin-inline: auto !important;
+
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    grid-template-areas:
+      "brand actions"
+      "links links" !important;
+
+    align-items: center !important;
+    column-gap: 12px !important;
+    row-gap: 10px !important;
+  }
+
+  .site-header > .nav-wrap > .brand-logo {
+    grid-area: brand !important;
+    min-width: 0 !important;
+    justify-self: start !important;
+  }
+
+  .site-header > .nav-wrap > .nav-actions {
+    grid-area: actions !important;
+    justify-self: end !important;
     display: flex !important;
     align-items: center !important;
-    justify-content: space-between !important;
-    gap: 12px !important;
-    width: calc(100% - 32px) !important;
+    gap: 7px !important;
+    white-space: nowrap !important;
+  }
+
+  .site-header > .nav-wrap > .nav-links {
+    grid-area: links !important;
+    width: 100% !important;
+    min-width: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 4px !important;
+
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    white-space: nowrap !important;
+    scrollbar-width: none !important;
+    padding: 2px 0 1px !important;
+  }
+
+  .site-header > .nav-wrap > .nav-links::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .site-header > .nav-wrap > .nav-links .nav-link {
+    flex: 0 0 auto !important;
   }
 }
+
+/* Smaller phones: keep only the useful compact controls in the header row. */
+@media (max-width: 520px) {
+  .site-header > .nav-wrap {
+    width: calc(100% - 24px) !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    column-gap: 8px !important;
+    row-gap: 8px !important;
+  }
+
+  .brand-logo {
+    gap: 7px !important;
+  }
+
+  .brand-icon {
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .brand-logo-image {
+    width: 32px !important;
+    height: 32px !important;
+    flex-basis: 32px !important;
+  }
+
+  .brand-name {
+    font-size: .98rem !important;
+  }
+
+  .brand-sub {
+    font-size: .52rem !important;
+  }
+
+  .nav-actions {
+    gap: 5px !important;
+  }
+
+  .nav-actions .btn {
+    padding-inline: 9px !important;
+  }
+}
+
+/* Very narrow phones: allow the action buttons to stay usable without
+   creating a tall, broken header. */
+@media (max-width: 390px) {
+  .site-header > .nav-wrap {
+    grid-template-columns: 1fr !important;
+    grid-template-areas:
+      "brand"
+      "actions"
+      "links" !important;
+  }
+
+  .site-header > .nav-wrap > .nav-actions {
+    justify-self: start !important;
+  }
+}
+
