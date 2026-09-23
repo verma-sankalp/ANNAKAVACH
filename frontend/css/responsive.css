@@ -443,3 +443,110 @@
     font-size: 0.72rem !important;
   }
 }
+
+/* ==========================================================================
+   DESKTOP SITE EMULATION & MID-SIZE SCREENS (901px - 1200px)
+   ========================================================================== */
+@media screen and (min-width: 901px) and (max-width: 1200px) {
+  /* 1. Ensure whole-page layout does not bleed off edges */
+  html, body {
+    min-width: 980px;
+    overflow-x: auto;
+  }
+
+  .container,
+  .site-header > .nav-wrap {
+    width: 95% !important;
+    max-width: 1140px !important;
+    padding-inline: 12px !important;
+  }
+
+  /* 2. Compact Navbar to fit 980px comfortably without overlapping */
+  .site-header {
+    padding: 8px 0 !important;
+  }
+
+  .site-header > .nav-wrap {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+  }
+
+  .site-header .brand-logo {
+    flex: 0 0 auto !important;
+  }
+
+  .site-header .brand-name {
+    font-size: 1.02rem !important;
+  }
+
+  .site-header .brand-sub {
+    font-size: 0.58rem !important;
+  }
+
+  /* Keep center links tight and readable */
+  .site-header .nav-links {
+    flex: 1 1 auto !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    min-width: 0 !important;
+  }
+
+  .site-header .nav-link {
+    padding: 5px 8px !important;
+    font-size: 0.72rem !important;
+  }
+
+  /* Keep actions compact */
+  .site-header .nav-actions {
+    flex: 0 0 auto !important;
+    gap: 6px !important;
+  }
+
+  .mode-btn {
+    padding: 5px 8px !important;
+    font-size: 0.70rem !important;
+  }
+
+  #btnExportTopSpec {
+    padding: 5px 8px !important;
+    font-size: 0.70rem !important;
+  }
+
+  /* 3. Keep the authentic desktop 2-column split (Form on Left, Results on Right) */
+  .workbench-grid {
+    display: grid !important;
+    grid-template-columns: 320px minmax(0, 1fr) !important;
+    gap: 16px !important;
+    align-items: start !important;
+  }
+
+  .sidebar-form-col {
+    position: sticky !important;
+    top: 70px !important;
+  }
+
+  /* 4. Tidy up the 7-step pipeline bar */
+  .workflow-pipeline-bar {
+    display: flex !important;
+    justify-content: space-between !important;
+    padding: 6px 10px !important;
+    min-height: 48px !important;
+  }
+
+  .workflow-pipeline-bar .pipeline-step {
+    padding: 4px 6px !important;
+    gap: 6px !important;
+  }
+
+  .workflow-pipeline-bar .pipeline-step-label {
+    font-size: 0.64rem !important;
+  }
+
+  /* 5. Commodity Presets Grid (Compact 4-column desktop display) */
+  .presets-clean-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+}
