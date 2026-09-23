@@ -32,11 +32,43 @@
   border-bottom-color: var(--border-card);
 }
 
+/* =========================================================
+   NAVBAR 
+   ========================================================= */
+
 .nav-wrap {
+  width: calc(100% - 160px);
+  max-width: 1520px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr) 520px;
+  align-items: center;
+
+  column-gap: 20px;
+}
+
+.nav-wrap .brand-logo {
+  justify-self: start;
+  min-width: 0;
+}
+
+.nav-wrap .nav-links {
+  justify-self: center;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 20px;
+  justify-content: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.nav-wrap .nav-actions {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  white-space: nowrap;
 }
 
 /* =========================================================
@@ -2140,5 +2172,59 @@ html, body {
 
   .presets-card-name {
     font-size: .80rem !important;
+  }
+}
+
+/* ==========================================================================
+   FINAL NAVBAR ALIGNMENT OVERRIDE
+   ========================================================================== */
+
+@media (min-width: 901px) {
+  .site-header > .nav-wrap {
+    width: min(100% - 64px, 1520px) !important;
+    max-width: 1520px !important;
+    margin-inline: auto !important;
+
+    display: grid !important;
+    grid-template-columns: 260px minmax(0, 1fr) 520px !important;
+    align-items: center !important;
+    column-gap: 20px !important;
+    row-gap: 0 !important;
+  }
+
+  .site-header > .nav-wrap > .brand-logo {
+    justify-self: start !important;
+    min-width: 0 !important;
+  }
+
+  .site-header > .nav-wrap > .nav-links {
+    justify-self: center !important;
+    width: auto !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    white-space: nowrap !important;
+  }
+
+  .site-header > .nav-wrap > .nav-actions {
+    justify-self: end !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+    white-space: nowrap !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .site-header > .nav-wrap {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    width: calc(100% - 32px) !important;
   }
 }
