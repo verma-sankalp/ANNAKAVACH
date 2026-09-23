@@ -134,14 +134,14 @@ ANNAKAVACH/
    - `X-XSS-Protection: 1; mode=block`
    - `Referrer-Policy: strict-origin-when-cross-origin`
    - `Permissions-Policy`: Restricts browser hardware access.
+                                                                                                                              
+                                                                                                                            
+                                                                                                            
+
+                                                                                                                  
 
 
 
-
-
-
-
-
-
+---
 Developed this Project with Hard Work.
 Contact at - sankalpverma2111@gmail.com
