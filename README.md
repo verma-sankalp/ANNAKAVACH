@@ -1,5 +1,12 @@
 # ANNAKAVACH — Food Packaging Material Recommendation System
 
+# SIH Project (2026)
+   S.No.                   - 236
+   Problem Statement Title - Al-Based Intelligent Food Packaging Material Recommendation System for Food Commodities
+   Category                - Software
+   PS.No.                  - SIH26236
+   Theme                   - Agriculture, FoodTech & Rural Development
+
 A scientific decision-support web application for the food processing and packaging industry, food startups, farmers, and packaging engineers.
 
 ---
