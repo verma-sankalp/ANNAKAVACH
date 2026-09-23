@@ -7,8 +7,8 @@
    Category                - Software                                                                                                                              
    PS.No.                  - SIH26236                                                                                                                              
    Theme                   - Agriculture, FoodTech & Rural Development                                                                                             
-
-
+                                                                                                                                                                   
+                                                                                                                                                                   
 
 A scientific decision-support web application for the food processing and packaging industry, food startups, farmers, and packaging engineers.
 
