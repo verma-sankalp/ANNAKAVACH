@@ -62,8 +62,7 @@ Double-click `frontend/index.html` to run completely client-side in any modern w
 
 ---
 
-## 📂 Professional Full-Stack Directory Structure
-
+## 📂 Project Directory Structure
 ```
 ANNAKAVACH/
 │
