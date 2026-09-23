@@ -4,13 +4,21 @@
    ========================================================================== */
 
 /* --- Medium Desktop & Landscape Tablet (1080px) --- */
-@media (max-width: 1080px) {
+@media screen and (max-width: 1080px) {
   .workbench-grid {
     grid-template-columns: 1fr;
   }
 
+  .sidebar-form-col {
+    position: static;
+  }
+
   .controls-column {
     max-width: 100%;
+  }
+
+  .presets-clean-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .methodology-grid {
@@ -22,20 +30,139 @@
   }
 }
 
-/* --- Tablet (768px) --- */
-@media (max-width: 768px) {
+/* --- Tablet (900px) --- */
+@media screen and (max-width: 900px) {
+  .site-header {
+    padding: 10px 0 !important;
+  }
+
+  .site-header > .nav-wrap {
+    width: calc(100% - 32px);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .site-header > .nav-wrap > .brand-logo {
+    flex: 0 0 auto;
+  }
+
+  .site-header > .nav-wrap > .nav-actions {
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
+
+  .site-header > .nav-wrap > .nav-links {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    justify-content: flex-start;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+
+  .site-header > .nav-wrap > .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
   .workflow-pipeline-bar {
-    grid-template-columns: repeat(4, 1fr);
+    display: flex !important;
+    overflow-x: auto !important;
+    justify-content: flex-start !important;
+    white-space: nowrap !important;
+    padding: 6px 10px !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .workflow-pipeline-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .workflow-pipeline-bar .pipeline-step {
+    flex: 0 0 auto !important;
+    min-width: 130px !important;
+  }
+
+  .workflow-pipeline-bar .pipeline-divider {
+    flex: 0 0 auto !important;
+    margin: 0 4px !important;
+  }
+
+  .presets-clean-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .rec-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* --- Mobile Landscape & Phablets (768px - 600px) --- */
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  .hero-section {
+    padding: 20px 0 12px !important;
+  }
+
+  .hero-title {
+    font-size: 1.65rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .hero-lead {
+    font-size: 0.82rem !important;
+  }
+
+  .presets-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .commodity-search-box {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .presets-filter-deck {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .presets-category-filters {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .presets-category-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .presets-clean-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .barrier-specs-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
   }
 
-  .sim-metrics-grid {
-    grid-template-columns: 1fr;
-  }
-
+  .sim-metrics-grid,
+  .eco-stats-list,
+  .score-progress-grid,
+  .methodology-grid,
+  .standards-reference-grid,
   .empty-state-steps-grid {
     grid-template-columns: 1fr;
   }
@@ -49,93 +176,130 @@
     margin: 0 auto;
   }
 
-  .eco-stats-list {
-    grid-template-columns: 1fr;
+  .detail-tabs-nav {
+    display: flex !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 6px;
   }
 
-  .hero-title-wrap, .hero-title-block {
-    flex-direction: column;
-    align-items: flex-start;
+  .detail-tabs-nav::-webkit-scrollbar {
+    display: none;
   }
 
-  .methodology-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .standards-reference-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* --- Mobile Landscape & Phablet (600px) --- */
-@media (max-width: 600px) {
-  .nav-wrap {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .nav-actions {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .workflow-pipeline-bar {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .radio-card-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .rec-header {
-    flex-direction: column;
-  }
-
-  .rec-score-circle {
-    margin-top: 8px;
-  }
-
-  .presets-header {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .commodity-search-box {
-    width: 100%;
-  }
-
-  .laminate-layer-card {
-    grid-template-columns: 1fr;
-    gap: 6px;
-  }
-
-  .layer-thickness-col {
-    text-align: left;
-  }
-
-  .footer-wrap {
-    flex-direction: column;
-    align-items: flex-start;
+  .detail-tab-btn {
+    flex-shrink: 0 !important;
   }
 }
 
-/* --- Small Mobile (480px) --- */
-@media (max-width: 480px) {
+/* --- Smartphone Screen (Max-Width: 480px) --- */
+@media screen and (max-width: 480px) {
   html {
     font-size: 13.5px;
   }
 
   .container {
-    padding: 0 16px;
+    padding: 0 12px;
   }
 
+  /* Compact 3-Row Header for Phone */
+  .site-header > .nav-wrap {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .site-header > .nav-wrap > .brand-logo {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .site-header > .nav-wrap > .nav-actions {
+    width: 100%;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .mode-toggle-group {
+    flex: 1 1 auto;
+  }
+
+  .mode-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 5px 6px;
+    font-size: 0.70rem;
+  }
+
+  #btnExportTopSpec {
+    flex: 0 0 auto;
+    padding: 5px 8px;
+    font-size: 0.70rem;
+  }
+
+  .site-header > .nav-wrap > .nav-links {
+    width: 100%;
+    padding-top: 2px;
+    gap: 4px;
+  }
+
+  .nav-link {
+    font-size: 0.72rem;
+    padding: 5px 9px;
+  }
+
+  /* Hero */
   .hero-title {
-    font-size: 1.5rem;
+    font-size: 1.4rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .hero-lead {
+    font-size: 0.78rem !important;
+  }
+
+  .workflow-pipeline-bar {
+    padding: 5px 8px !important;
+  }
+
+  .workflow-pipeline-bar .pipeline-step {
+    min-width: 115px !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    padding: 0 6px !important;
+    gap: 5px !important;
+  }
+
+  .workflow-pipeline-bar .pipeline-step-badge {
+    width: 20px !important;
+    height: 20px !important;
+    font-size: 0.60rem !important;
+  }
+
+  .workflow-pipeline-bar .pipeline-step-label {
+    font-size: 0.62rem !important;
+  }
+
+  /* Single column cards on narrow devices */
+  .presets-clean-grid {
+    grid-template-columns: 1fr;
   }
 
   .barrier-specs-grid {
     grid-template-columns: 1fr;
+  }
+
+  .presets-footer-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .presets-quick-tip {
+    text-align: left;
   }
 
   .empty-state-cta {
@@ -143,8 +307,8 @@
     width: 100%;
   }
 
-  .empty-state-cta .btn-primary-action,
-  .empty-state-cta .btn-secondary {
+  .empty-state-cta button,
+  .empty-state-cta a {
     width: 100%;
   }
 }
@@ -229,42 +393,4 @@
     flex-direction: row !important;
     border: 1pt solid #CCCCCC !important;
   }
-}
-
-
-/* --- Current ANNAKAVACH component names --- */
-@media (max-width: 1080px) {
-  .workbench-grid { grid-template-columns: 320px minmax(0, 1fr); gap: 16px; }
-  .presets-clean-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-
-@media (max-width: 900px) {
-  .workbench-grid { grid-template-columns: 1fr; }
-  .sidebar-form-col, .workbench-results-col { width: 100%; }
-  .presets-clean-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .workflow-pipeline-bar { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .pipeline-divider { display: none; }
-}
-
-@media (max-width: 650px) {
-  .container { padding-left: 16px; padding-right: 16px; }
-  .nav-wrap { flex-wrap: wrap; }
-  .nav-links { order: 3; width: 100%; overflow-x: auto; }
-  .nav-actions { width: 100%; flex-wrap: wrap; }
-  .presets-filter-deck { flex-direction: column; align-items: stretch; }
-  .presets-clean-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .empty-state-steps-grid { grid-template-columns: 1fr; }
-  .barrier-specs-grid { grid-template-columns: 1fr; }
-  .workflow-pipeline-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .presets-quick-tip { width: 100%; margin-left: 0; }
-  .rec-header { flex-direction: column; }
-}
-
-@media (max-width: 480px) {
-  html { font-size: 13.5px; }
-  .hero-title { font-size: 1.5rem; }
-  .presets-clean-grid { grid-template-columns: 1fr; }
-  .empty-state-cta { flex-direction: column; width: 100%; }
-  .empty-state-cta button { width: 100%; }
-  .workflow-pipeline-bar { grid-template-columns: 1fr 1fr; }
 }
