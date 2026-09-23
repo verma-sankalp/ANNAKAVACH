@@ -46,16 +46,27 @@
   text-decoration: none;
 }
 
+/* ANNAKAVACH Navbar Logo */
 .brand-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-sm);
-  background: var(--brand-primary);
-  color: #FFFFFF;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-xs);
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    padding: 2px;
+    border-radius: 10px;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: none;
+}
+
+.brand-logo-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
 }
 
 html[data-theme="dark"] .brand-icon {
