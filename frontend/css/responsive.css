@@ -1,0 +1,232 @@
+/* ==========================================================================
+   Annakavach — Responsive Breakpoints & Print Stylesheet
+   Mobile, Tablet, Desktop Media Queries & Print Layout
+   ========================================================================== */
+
+/* --- Medium Desktop & Landscape Tablet (1080px) --- */
+@media (max-width: 1080px) {
+  .workbench-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .controls-column {
+    max-width: 100%;
+  }
+
+  .methodology-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .standards-reference-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --- Tablet (768px) --- */
+@media (max-width: 768px) {
+  .pipeline-steps-wrap {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .rec-specs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sim-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .empty-state-steps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .qr-passport-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .qr-canvas-holder {
+    margin: 0 auto;
+  }
+
+  .eco-stats-list {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-title-wrap {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .methodology-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .standards-reference-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Mobile Landscape & Phablet (600px) --- */
+@media (max-width: 600px) {
+  .nav-wrap {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .nav-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .pipeline-steps-wrap {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .radio-card-group {
+    grid-template-columns: 1fr;
+  }
+
+  .rec-header-row {
+    flex-direction: column;
+  }
+
+  .suitability-circle {
+    margin-top: 8px;
+  }
+
+  .ribbon-top-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-input-wrap {
+    width: 100%;
+  }
+
+  .laminate-layer-card {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .layer-thickness-col {
+    text-align: left;
+  }
+
+  .footer-wrap {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* --- Small Mobile (480px) --- */
+@media (max-width: 480px) {
+  html {
+    font-size: 13.5px;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+
+  .hero-title {
+    font-size: 1.5rem;
+  }
+
+  .rec-specs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .empty-state-cta {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .empty-state-cta .btn-primary-action,
+  .empty-state-cta .btn-secondary {
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   Print & Technical Dossier Specification Styles
+   ========================================================================== */
+@media print {
+  *, *::before, *::after {
+    background: transparent !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  body {
+    background: #FFFFFF !important;
+    font-size: 10pt;
+    line-height: 1.3;
+  }
+
+  body::before {
+    display: none !important;
+  }
+
+  .site-header,
+  .workflow-pipeline-bar,
+  .history-ribbon-wrap,
+  .presets-ribbon,
+  .controls-column,
+  .detail-tabs-nav,
+  .theme-toggle-group,
+  .mode-toggle-group,
+  .site-footer,
+  .empty-state-card,
+  .btn-primary-action,
+  .btn-secondary {
+    display: none !important;
+  }
+
+  .workbench-grid {
+    display: block !important;
+  }
+
+  .tab-pane {
+    display: block !important;
+    page-break-inside: avoid;
+    margin-bottom: 24pt;
+  }
+
+  .hero-rec-card,
+  .panel-card,
+  .standards-regulatory-deck {
+    border: 1pt solid #CCCCCC !important;
+    border-radius: 0 !important;
+    padding: 12pt !important;
+    page-break-inside: avoid;
+  }
+
+  .suitability-circle,
+  .eco-circularity-circle {
+    border: 1pt solid #000000 !important;
+    color: #000000 !important;
+  }
+
+  .compare-matrix-table,
+  .cost-breakdown-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  .compare-matrix-table th,
+  .compare-matrix-table td,
+  .cost-breakdown-table th,
+  .cost-breakdown-table td {
+    border: 0.5pt solid #888888 !important;
+    padding: 4pt 6pt !important;
+  }
+
+  .qr-passport-card {
+    display: flex !important;
+    flex-direction: row !important;
+    border: 1pt solid #CCCCCC !important;
+  }
+}
