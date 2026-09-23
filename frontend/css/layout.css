@@ -39,34 +39,57 @@
   gap: 20px;
 }
 
+/* =========================================================
+   ANNAKAVACH NAVBAR LOGO 
+   ========================================================= */
+
 .brand-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  text-decoration: none !important;
+  flex-shrink: 0 !important;
 }
 
-/* ANNAKAVACH Navbar Logo */
 .brand-icon {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    padding: 2px;
-    border-radius: 10px;
-    background: transparent;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    box-shadow: none;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  max-width: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+
+  padding: 2px !important;
+  margin: 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  overflow: hidden !important;
+  flex-shrink: 0 !important;
+
+  background: transparent !important;
+  border: none !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
 }
 
 .brand-logo-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
+  display: block !important;
+
+  width: 36px !important;
+  height: 36px !important;
+
+  min-width: 36px !important;
+  max-width: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+
+  object-fit: contain !important;
+  object-position: center !important;
+
+  flex: 0 0 36px !important;
 }
 
 html[data-theme="dark"] .brand-icon {
