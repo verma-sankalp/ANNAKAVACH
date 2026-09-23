@@ -1,0 +1,6 @@
+# Annakavach Backend Requirements
+# The core server runs using standard library (zero external dependencies required).
+# Optional production server dependencies:
+# gunicorn>=21.2.0
+# uvicorn>=0.28.0
+# fastapi>=0.110.0
