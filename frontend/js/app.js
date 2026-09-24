@@ -2,6 +2,7 @@
  * Annakavach — Master Application Controller
  * Handles user interactions, real-time input validation, kinetic simulation rendering,
  * recommendation history caching, three-way theme management (Light / Dark / Auto),
+ * global viewport tap ripple animations, dynamic Indian Rupee (₹) pricing,
  * and formal ASTM/ISO technical specification document generation.
  */
 
@@ -51,6 +52,9 @@ document.addEventListener("DOMContentLoaded", () => {
   } catch (e) {
     recommendationHistory = [];
   }
+
+  // Conversion rate: 1 USD ≈ 83 INR
+  const USD_TO_INR = 83;
 
   // Element Selectors Cache
   const elements = {
@@ -238,6 +242,109 @@ document.addEventListener("DOMContentLoaded", () => {
     printableSpecContent: document.getElementById("printableSpecContent")
   };
 
+  // Presets & Filter State
+  let currentCategoryFilter = "ALL";
+  let currentSearchQuery = "";
+  let isPresetsExpanded = false;
+
+  const CATEGORY_EMOJIS = {
+    "Fresh Produce": "🍓",
+    "Meat & Poultry": "🥩",
+    "Seafood": "🐟",
+    "Dairy": "🧀",
+    "Bakery": "🍞",
+    "Dry Foods & Grains": "☕",
+    "Snacks & Confectionery": "🥔",
+    "Beverages & Liquids": "🫒",
+    "Ready-to-Eat (RTE)": "🍝",
+    "Frozen Foods": "🥦"
+  };
+
+  // Precise food-commodity emoji mapping[cite: 34]
+  function getFoodEmoji(food) {
+    const name = (food.name || "").toLowerCase();
+    if (name.includes("spinach") || name.includes("salad") || (name.includes("green") && !name.includes("pea"))) return "🥬";
+    if (name.includes("mushroom")) return "🍄";
+    if (name.includes("apple")) return "🍎";
+    if (name.includes("avocado")) return "🥑";
+    if (name.includes("tomato")) return "🍅";
+    if (name.includes("strawberr") || name.includes("berr")) return "🍓";
+    if (name.includes("steak") || name.includes("beef") || name.includes("mince")) return "🥩";
+    if (name.includes("chicken") || name.includes("poultry")) return "🍗";
+    if (name.includes("bacon") || name.includes("pork")) return "🥓";
+    if (name.includes("salmon") || name.includes("fish")) return "🐟";
+    if (name.includes("prawn") || name.includes("shrimp") || name.includes("seafood")) return "🍤";
+    if (name.includes("cheddar") || name.includes("cheese") || name.includes("mozzarella")) return "🧀";
+    if (name.includes("butter")) return "🧈";
+    if (name.includes("bread") || name.includes("sourdough") || name.includes("bakery")) return "🥖";
+    if (name.includes("cookie")) return "🍪";
+    if (name.includes("croissant")) return "🥐";
+    if (name.includes("coffee")) return "☕";
+    if (name.includes("spice") || name.includes("herb")) return "🌿";
+    if (name.includes("rice") || name.includes("grain")) return "🍚";
+    if (name.includes("chip") || name.includes("snack")) return "🍟";
+    if (name.includes("almond") || name.includes("nut")) return "🌰";
+    if (name.includes("chocolate")) return "🍫";
+    if (name.includes("juice")) return "🧃";
+    if (name.includes("oil") || name.includes("olive")) return "🫒";
+    if (name.includes("pasta") || name.includes("tortellini")) return "🍝";
+    if (name.includes("meal") || name.includes("chilled-ready") || name.includes("rte")) return "🍱";
+    if (name.includes("pea")) return "🫛";
+    return CATEGORY_EMOJIS[food.category] || "📦";
+  }
+
+  const PIPELINE_STAGES = {
+    "1": {
+      badge: "STAGE 01",
+      title: "Food Commodity Ingestion & Profile Analysis",
+      desc: "Ingests biological food attributes, water activity (aw), pH, fat composition, and metabolic respiration rates from calibrated reference libraries or custom user inputs.",
+      input: "Physico-chemical Library (22 Matrices)",
+      output: "Physico-Chemical Spoilage Profile"
+    },
+    "2": {
+      badge: "STAGE 02",
+      title: "Spoilage Mechanism & Vulnerability Mapping",
+      desc: "Evaluates multi-vector degradation pathways including aerobic bacterial growth, mold/yeast proliferation, lipid auto-oxidation, enzymatic browning, and moisture desiccation.",
+      input: "aw, pH, Moisture %, Fat %",
+      output: "Ranked Degradation Vectors"
+    },
+    "3": {
+      badge: "STAGE 03",
+      title: "Storage Logistics & Distribution Boundary Matching",
+      desc: "Configures thermal conditions and ambient relative humidity for cold chain (0-4°C), ambient (20-25°C), or frozen (-18°C) supply chains to compute barrier requirements.",
+      input: "Storage Class, Temperature & RH",
+      output: "Thermal & Humidity Boundary Curves"
+    },
+    "4": {
+      badge: "STAGE 04",
+      title: "Barrier Permeation Kinetics Formulation",
+      desc: "Calculates precise oxygen transmission rate (OTR) and water vapor transmission rate (WVTR) boundary limits using Arrhenius temperature-acceleration models.",
+      input: "Target Shelf Life & Spoilage Kinetic Limits",
+      output: "Target OTR (cc/m²·d·atm) & WVTR (g/m²·d)"
+    },
+    "5": {
+      badge: "STAGE 05",
+      title: "Polymer Substrate & Multi-Layer Laminate Matching",
+      desc: "Ranks high-barrier co-extruded multi-layer laminates, mono-material PE/PP structures, vacuum metalized films, and bio-polymers against target barrier constraints.",
+      input: "Packaging Materials Database (12 Resins)",
+      output: "Optimal Laminate Structure & SIT"
+    },
+    "6": {
+      badge: "STAGE 06",
+      title: "MAP Gas Blend & Dynamic Shelf-Life Simulation",
+      desc: "Calculates optimal Modified Atmosphere Packaging (O2/CO2/N2) headspace composition, anti-fog laser micro-perforations, and simulates extended vs unpackaged shelf-life.",
+      input: "MAP Gas Equilibrium & ASLT Equations",
+      output: "Simulated Shelf-Life (Days) & Gas Gauge"
+    },
+    "7": {
+      badge: "STAGE 07",
+      title: "EU PPWR 2030 Circularity & DPP Passport Generation",
+      desc: "Scores cradle-to-gate carbon footprint, recyclability compliance under EU PPWR 2030 packaging regulations, Plastic Packaging Tax, and mints Digital Product Passports.",
+      input: "LCA Database & Circularity Indices",
+      output: "EU PPWR Recyclability Class & DPP QR"
+    }
+  };
+
   // =========================================================================
   // 1. Application Initialization & State Management Engine
   // =========================================================================
@@ -382,109 +489,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   }
-
-  // Presets & Filter State
-  let currentCategoryFilter = "ALL";
-  let currentSearchQuery = "";
-  let isPresetsExpanded = false;
-
-  const CATEGORY_EMOJIS = {
-    "Fresh Produce": "🍓",
-    "Meat & Poultry": "🥩",
-    "Seafood": "🐟",
-    "Dairy": "🧀",
-    "Bakery": "🍞",
-    "Dry Foods & Grains": "☕",
-    "Snacks & Confectionery": "🥔",
-    "Beverages & Liquids": "🫒",
-    "Ready-to-Eat (RTE)": "🍝",
-    "Frozen Foods": "🥦"
-  };
-
-  // Precise food-commodity emoji mapping
-  function getFoodEmoji(food) {
-    const name = (food.name || "").toLowerCase();
-    if (name.includes("spinach") || name.includes("salad") || name.includes("green") && !name.includes("pea")) return "🥬";
-    if (name.includes("mushroom")) return "🍄";
-    if (name.includes("apple")) return "🍎";
-    if (name.includes("avocado")) return "🥑";
-    if (name.includes("tomato")) return "🍅";
-    if (name.includes("strawberr") || name.includes("berr")) return "🍓";
-    if (name.includes("steak") || name.includes("beef") || name.includes("mince")) return "🥩";
-    if (name.includes("chicken") || name.includes("poultry")) return "🍗";
-    if (name.includes("bacon") || name.includes("pork")) return "🥓";
-    if (name.includes("salmon") || name.includes("fish")) return "🐟";
-    if (name.includes("prawn") || name.includes("shrimp") || name.includes("seafood")) return "🍤";
-    if (name.includes("cheddar") || name.includes("cheese") || name.includes("mozzarella")) return "🧀";
-    if (name.includes("butter")) return "🧈";
-    if (name.includes("bread") || name.includes("sourdough") || name.includes("bakery")) return "🥖";
-    if (name.includes("cookie")) return "🍪";
-    if (name.includes("croissant")) return "🥐";
-    if (name.includes("coffee")) return "☕";
-    if (name.includes("spice") || name.includes("herb")) return "🌿";
-    if (name.includes("rice") || name.includes("grain")) return "🍚";
-    if (name.includes("chip") || name.includes("snack")) return "🍟";
-    if (name.includes("almond") || name.includes("nut")) return "🌰";
-    if (name.includes("chocolate")) return "🍫";
-    if (name.includes("juice")) return "🧃";
-    if (name.includes("oil") || name.includes("olive")) return "🫒";
-    if (name.includes("pasta") || name.includes("tortellini")) return "🍝";
-    if (name.includes("meal") || name.includes("chilled-ready") || name.includes("rte")) return "🍱";
-    if (name.includes("pea")) return "🫛";
-    return CATEGORY_EMOJIS[food.category] || "📦";
-  }
-
-  const PIPELINE_STAGES = {
-    "1": {
-      badge: "STAGE 01",
-      title: "Food Commodity Ingestion & Profile Analysis",
-      desc: "Ingests biological food attributes, water activity (aw), pH, fat composition, and metabolic respiration rates from calibrated reference libraries or custom user inputs.",
-      input: "Physico-chemical Library (22 Matrices)",
-      output: "Physico-Chemical Spoilage Profile"
-    },
-    "2": {
-      badge: "STAGE 02",
-      title: "Spoilage Mechanism & Vulnerability Mapping",
-      desc: "Evaluates multi-vector degradation pathways including aerobic bacterial growth, mold/yeast proliferation, lipid auto-oxidation, enzymatic browning, and moisture desiccation.",
-      input: "aw, pH, Moisture %, Fat %",
-      output: "Ranked Degradation Vectors"
-    },
-    "3": {
-      badge: "STAGE 03",
-      title: "Storage Logistics & Distribution Boundary Matching",
-      desc: "Configures thermal conditions and ambient relative humidity for cold chain (0-4°C), ambient (20-25°C), or frozen (-18°C) supply chains to compute barrier requirements.",
-      input: "Storage Class, Temperature & RH",
-      output: "Thermal & Humidity Boundary Curves"
-    },
-    "4": {
-      badge: "STAGE 04",
-      title: "Barrier Permeation Kinetics Formulation",
-      desc: "Calculates precise oxygen transmission rate (OTR) and water vapor transmission rate (WVTR) boundary limits using Arrhenius temperature-acceleration models.",
-      input: "Target Shelf Life & Spoilage Kinetic Limits",
-      output: "Target OTR (cc/m²·d·atm) & WVTR (g/m²·d)"
-    },
-    "5": {
-      badge: "STAGE 05",
-      title: "Polymer Substrate & Multi-Layer Laminate Matching",
-      desc: "Ranks high-barrier co-extruded multi-layer laminates, mono-material PE/PP structures, vacuum metalized films, and bio-polymers against target barrier constraints.",
-      input: "Packaging Materials Database (12 Resins)",
-      output: "Optimal Laminate Structure & SIT"
-    },
-    "6": {
-      badge: "STAGE 06",
-      title: "MAP Gas Blend & Dynamic Shelf-Life Simulation",
-      desc: "Calculates optimal Modified Atmosphere Packaging (O2/CO2/N2) headspace composition, anti-fog laser micro-perforations, and simulates extended vs unpackaged shelf-life.",
-      input: "MAP Gas Equilibrium & ASLT Equations",
-      output: "Simulated Shelf-Life (Days) & Gas Gauge"
-    },
-    "7": {
-      badge: "STAGE 07",
-      title: "EU PPWR 2030 Circularity & DPP Passport Generation",
-      desc: "Scores cradle-to-gate carbon footprint, recyclability compliance under EU PPWR 2030 packaging regulations, Plastic Packaging Tax, and mints Digital Product Passports.",
-      input: "LCA Database & Circularity Indices",
-      output: "EU PPWR Recyclability Class & DPP QR"
-    }
-  };
 
   // =========================================================================
   // 2. Preset Carousel & Category Filters (Nested Layout Architecture)
@@ -1281,11 +1285,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =========================================================================
-  // 7. Material Library Catalog
+  // 7. Material Library Catalog (with Indian Rupee ₹ Conversion)[cite: 24, 32]
   // =========================================================================
-  // Conversion rate: 1 USD ≈ 83 INR
-  const USD_TO_INR = 83;
-
   function renderCatalogGrid() {
     const materials = window.getPackagingMaterials ? window.getPackagingMaterials() : (window.PACKAGING_MATERIALS || []);
     const query = (elements.catalogSearchInput ? elements.catalogSearchInput.value : "").toLowerCase().trim();
@@ -1303,7 +1304,7 @@ document.addEventListener("DOMContentLoaded", () => {
     elements.materialsCatalogGrid.innerHTML = "";
 
     filtered.forEach(mat => {
-      // Calculate price in Indian Rupees (INR)
+      // Calculate price in Indian Rupees (INR)[cite: 32]
       const costInINR = (parseFloat(mat.costPerSqM || 0) * USD_TO_INR).toFixed(1);
 
       const card = document.createElement("div");
@@ -1474,62 +1475,40 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =========================================================================
-  // 9. On-Click & Scroll Animations Engine
+  // 9. Global Viewport Tap & Click Ripple Animation Engine[cite: 32]
   // =========================================================================
+  function spawnGlobalRipple(clientX, clientY) {
+    const ripple = document.createElement("span");
+    ripple.className = "global-tap-ripple";
+    ripple.style.left = `${clientX}px`;
+    ripple.style.top = `${clientY}px`;
+    document.body.appendChild(ripple);
 
-  // Tactile Click Ripple Effect Generator
-  function createClickRipple(event, targetElement) {
-    const el = targetElement || event.currentTarget;
-    if (!el) return;
-
-    const rect = el.getBoundingClientRect();
-    const circle = document.createElement("span");
-    const diameter = Math.max(rect.width, rect.height, 30);
-    const radius = diameter / 2;
-
-    const clientX = event.clientX || (event.touches && event.touches[0] ? event.touches[0].clientX : rect.left + radius);
-    const clientY = event.clientY || (event.touches && event.touches[0] ? event.touches[0].clientY : rect.top + radius);
-
-    circle.style.width = circle.style.height = `${diameter}px`;
-    circle.style.left = `${clientX - rect.left - radius}px`;
-    circle.style.top = `${clientY - rect.top - radius}px`;
-    circle.classList.add("click-ripple");
-
-    const computedPos = window.getComputedStyle(el).position;
-    if (computedPos === "static") {
-      el.style.position = "relative";
-    }
-    el.classList.add("ripple-target");
-
-    const existing = el.querySelector(".click-ripple");
-    if (existing) existing.remove();
-
-    el.appendChild(circle);
-
-    circle.addEventListener("animationend", () => {
-      circle.remove();
-    });
+    ripple.addEventListener("animationend", () => {
+      ripple.remove();
+    }, { once: true });
   }
 
-  // Global Click Interactions Dispatcher & Micro-Animations
   function initClickAnimations() {
-    document.addEventListener("click", (e) => {
+    // Single subtle pointer listener across all viewports
+    document.addEventListener("pointerdown", (e) => {
+      // Ignore right/middle clicks
+      if (e.button !== undefined && e.button !== 0) return;
+      
+      spawnGlobalRipple(e.clientX, e.clientY);
+
+      // Controlled subtle depression on buttons without bouncing or jitter
       const clickable = e.target.closest(
         "button, a, .cat-chip, .presets-category-filter, .preset-card, .detail-tab-btn, .theme-toggle-btn, .mode-btn, .history-chip, .catalog-material-card, .pipeline-step, .search-clear-btn, .pipeline-info-close"
       );
-      if (clickable) {
-        createClickRipple(e, clickable);
-
-        // Add micro-bounce animation on clickable elements
-        if (!clickable.classList.contains("click-bounce-anim")) {
-          clickable.classList.add("click-bounce-anim");
-          setTimeout(() => clickable.classList.remove("click-bounce-anim"), 320);
-        }
+      if (clickable && !clickable.classList.contains("click-bounce-anim")) {
+        clickable.classList.add("click-bounce-anim");
+        setTimeout(() => clickable.classList.remove("click-bounce-anim"), 180);
       }
     }, { passive: true });
   }
 
-  // Viewport IntersectionObserver Scroll Animation System
+  // Viewport IntersectionObserver Scroll Animation System[cite: 32]
   function initScrollAnimations() {
     const scrollElements = document.querySelectorAll(".reveal-on-scroll");
 
@@ -1552,7 +1531,7 @@ document.addEventListener("DOMContentLoaded", () => {
       scrollElements.forEach(el => el.classList.add("is-revealed"));
     }
 
-    // Dynamic Sticky Header Elevation & Nav ScrollSpy
+    // Dynamic Sticky Header Elevation & Nav ScrollSpy[cite: 32]
     const siteHeader = document.querySelector(".site-header");
     const sections = [
       { id: "workbench-section", link: document.getElementById("navLinkWorkbench") },
@@ -1574,7 +1553,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-      // ScrollSpy Active Link Tracking
+      // ScrollSpy Active Link Tracking[cite: 32]
       let currentActiveId = "workbench-section";
       for (let i = 0; i < sections.length; i++) {
         const sectionEl = document.getElementById(sections[i].id);
@@ -1595,7 +1574,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =========================================================================
-  // Smooth Scrolling & Anchor Navigation
+  // Smooth Scrolling & Anchor Navigation[cite: 32]
   // =========================================================================
   function smoothScrollTo(targetY) {
     window.scrollTo({
@@ -1604,7 +1583,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Smooth Anchor Scrolling with Header Compensation
   function setupSmoothAnchorScrolling() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener("click", function(e) {
@@ -1624,10 +1602,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =========================================================================
-  // 10. Event Listeners Setup
+  // 10. Event Listeners Setup[cite: 32]
   // =========================================================================
   function setupEventListeners() {
-    // Theme Switchers (Light, Dark, Auto)
+    // Theme Switchers (Light, Dark, Auto)[cite: 32]
     if (elements.themeBtnLight) {
       elements.themeBtnLight.addEventListener("click", () => window.setTheme("light"));
     }
@@ -1638,7 +1616,7 @@ document.addEventListener("DOMContentLoaded", () => {
       elements.themeBtnAuto.addEventListener("click", () => window.setTheme("auto"));
     }
 
-    // Sliders Live Text Updates & Reactive Invalidation
+    // Sliders Live Text Updates & Reactive Invalidation[cite: 32]
     elements.inputMoisture.addEventListener("input", (e) => {
       elements.valMoisture.textContent = `${e.target.value}%`;
       validateInputs();
@@ -1675,7 +1653,7 @@ document.addEventListener("DOMContentLoaded", () => {
       invalidateCurrentRecommendation();
     });
 
-    // Custom commodity name input changes lineage tag & invalidates stale recs
+    // Custom commodity name input changes lineage tag & invalidates stale recs[cite: 32]
     elements.inputCommodityName.addEventListener("input", () => {
       if (elements.tagLineageCommodity) {
         elements.tagLineageCommodity.textContent = elements.inputCommodityName.value.trim() ? "[User Input]" : "[Not Selected]";
@@ -1684,7 +1662,7 @@ document.addEventListener("DOMContentLoaded", () => {
       invalidateCurrentRecommendation();
     });
 
-    // Category Select change
+    // Category Select change[cite: 32]
     if (elements.inputCategory) {
       elements.inputCategory.addEventListener("change", () => {
         validateInputs();
@@ -1692,7 +1670,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Respiration and Light Sensitivity selects
+    // Respiration and Light Sensitivity selects[cite: 32]
     if (elements.inputRespiration) {
       elements.inputRespiration.addEventListener("change", () => invalidateCurrentRecommendation());
     }
@@ -1700,7 +1678,7 @@ document.addEventListener("DOMContentLoaded", () => {
       elements.inputLightSensitivity.addEventListener("change", () => invalidateCurrentRecommendation());
     }
 
-    // Pouch dimensions & price inputs
+    // Pouch dimensions & price inputs[cite: 32]
     if (elements.inputPackWidth) {
       elements.inputPackWidth.addEventListener("input", () => invalidateCurrentRecommendation());
     }
@@ -1711,7 +1689,7 @@ document.addEventListener("DOMContentLoaded", () => {
       elements.inputProductWholesalePrice.addEventListener("input", () => invalidateCurrentRecommendation());
     }
 
-    // Storage Radio Buttons
+    // Storage Radio Buttons[cite: 32]
     document.querySelectorAll('input[name="storageTypeRadio"]').forEach(radio => {
       radio.addEventListener("change", (e) => {
         if (e.target.value === "chilled") {
@@ -1728,10 +1706,10 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // Calculate Recommendation Button
+    // Calculate Recommendation Button[cite: 32]
     elements.btnCalculate.addEventListener("click", executeEvaluation);
 
-    // Reset Defaults / Start New Analysis Buttons (Full clean state reset)
+    // Reset Defaults / Start New Analysis Buttons (Full clean state reset)[cite: 32]
     if (elements.btnResetDefaults) {
       elements.btnResetDefaults.addEventListener("click", resetToEmptyState);
     }
@@ -1745,7 +1723,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Empty state quick CTA button to browse presets
+    // Empty state quick CTA button to browse presets[cite: 32]
     if (elements.emptyStateSelectPresetBtn) {
       elements.emptyStateSelectPresetBtn.addEventListener("click", () => {
         const presetsSection = document.getElementById("commoditySelectorSection");
@@ -1758,7 +1736,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Preset Category Filter Chips in Nested Ribbon
+    // Preset Category Filter Chips in Nested Ribbon[cite: 32]
     if (elements.categoryFiltersWrap) {
       elements.categoryFiltersWrap.addEventListener("click", (e) => {
         const chip = e.target.closest(".cat-chip, .presets-category-filter");
@@ -1770,7 +1748,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Commodity Live Search Input & Clear Button
+    // Commodity Live Search Input & Clear Button[cite: 32]
     if (elements.commoditySearchInput) {
       elements.commoditySearchInput.addEventListener("input", (e) => {
         currentSearchQuery = e.target.value;
@@ -1793,7 +1771,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Toggle Progressive Disclosure (Show All / Show Fewer)
+    // Toggle Progressive Disclosure (Show All / Show Fewer)[cite: 32]
     if (elements.btnToggleMoreCommodities) {
       elements.btnToggleMoreCommodities.addEventListener("click", () => {
         isPresetsExpanded = !isPresetsExpanded;
@@ -1801,7 +1779,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Interactive 7-Stage Workflow Pipeline Popover Information
+    // Interactive 7-Stage Workflow Pipeline Popover Information[cite: 32]
     if (elements.workflowPipelineBar) {
       elements.workflowPipelineBar.addEventListener("click", (e) => {
         const stepEl = e.target.closest(".pipeline-step");
@@ -1824,7 +1802,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Robust Close Handler for Stage Info Box
+    // Robust Close Handler for Stage Info Box[cite: 32]
     if (elements.pipelineInfoClose && elements.pipelineInfoBox) {
       elements.pipelineInfoClose.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -1833,7 +1811,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Mode Toggle (Engineer vs Fast Wizard)
+    // Mode Toggle (Engineer vs Fast Wizard)[cite: 32]
     elements.modeBtnEngineer.addEventListener("click", () => {
       elements.modeBtnEngineer.classList.add("active");
       elements.modeBtnFarmer.classList.remove("active");
@@ -1848,7 +1826,7 @@ document.addEventListener("DOMContentLoaded", () => {
       elements.engineerControlsCard.style.display = "none";
     });
 
-    // Fast Wizard Run Button
+    // Fast Wizard Run Button[cite: 32]
     elements.btnRunWizard.addEventListener("click", () => {
       const chosenCommodity = elements.wizardCommoditySelect.value;
       const chosenStorage = elements.wizardStorageSelect.value;
@@ -1867,7 +1845,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Detail Tabs Switching
+    // Detail Tabs Switching[cite: 32]
     elements.detailTabBtns.forEach(btn => {
       btn.addEventListener("click", () => {
         elements.detailTabBtns.forEach(b => b.classList.remove("active"));
@@ -1878,7 +1856,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // Catalog Search & Filter
+    // Catalog Search & Filter[cite: 32]
     if (elements.catalogSearchInput) {
       elements.catalogSearchInput.addEventListener("input", renderCatalogGrid);
     }
@@ -1886,12 +1864,12 @@ document.addEventListener("DOMContentLoaded", () => {
       elements.catalogTypeFilter.addEventListener("change", renderCatalogGrid);
     }
 
-    // Spec Sheet Export Modal
+    // Spec Sheet Export Modal[cite: 32]
     elements.btnExportTopSpec.addEventListener("click", renderSpecSheetDocument);
     elements.btnCloseSpecModal.addEventListener("click", () => elements.specSheetModal.style.display = "none");
     elements.btnPrintModalDoc.addEventListener("click", () => window.print());
 
-    // Print Batch Tag button
+    // Print Batch Tag button[cite: 32]
     elements.btnPrintQRBadge.addEventListener("click", () => {
       const printWin = window.open('', '_blank', 'width=500,height=600');
       const canvas = elements.passportQRCanvas;
@@ -1916,6 +1894,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Run Application
+  // Run Application[cite: 32]
   init();
 });
