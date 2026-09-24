@@ -401,6 +401,39 @@ document.addEventListener("DOMContentLoaded", () => {
     "Frozen Foods": "🥦"
   };
 
+  // Precise food-commodity emoji mapping
+  function getFoodEmoji(food) {
+    const name = (food.name || "").toLowerCase();
+    if (name.includes("spinach") || name.includes("salad") || name.includes("green") && !name.includes("pea")) return "🥬";
+    if (name.includes("mushroom")) return "🍄";
+    if (name.includes("apple")) return "🍎";
+    if (name.includes("avocado")) return "🥑";
+    if (name.includes("tomato")) return "🍅";
+    if (name.includes("strawberr") || name.includes("berr")) return "🍓";
+    if (name.includes("steak") || name.includes("beef") || name.includes("mince")) return "🥩";
+    if (name.includes("chicken") || name.includes("poultry")) return "🍗";
+    if (name.includes("bacon") || name.includes("pork")) return "🥓";
+    if (name.includes("salmon") || name.includes("fish")) return "🐟";
+    if (name.includes("prawn") || name.includes("shrimp") || name.includes("seafood")) return "🍤";
+    if (name.includes("cheddar") || name.includes("cheese") || name.includes("mozzarella")) return "🧀";
+    if (name.includes("butter")) return "🧈";
+    if (name.includes("bread") || name.includes("sourdough") || name.includes("bakery")) return "🥖";
+    if (name.includes("cookie")) return "🍪";
+    if (name.includes("croissant")) return "🥐";
+    if (name.includes("coffee")) return "☕";
+    if (name.includes("spice") || name.includes("herb")) return "🌿";
+    if (name.includes("rice") || name.includes("grain")) return "🍚";
+    if (name.includes("chip") || name.includes("snack")) return "🍟";
+    if (name.includes("almond") || name.includes("nut")) return "🌰";
+    if (name.includes("chocolate")) return "🍫";
+    if (name.includes("juice")) return "🧃";
+    if (name.includes("oil") || name.includes("olive")) return "🫒";
+    if (name.includes("pasta") || name.includes("tortellini")) return "🍝";
+    if (name.includes("meal") || name.includes("chilled-ready") || name.includes("rte")) return "🍱";
+    if (name.includes("pea")) return "🫛";
+    return CATEGORY_EMOJIS[food.category] || "📦";
+  }
+
   const PIPELINE_STAGES = {
     "1": {
       badge: "STAGE 01",
@@ -524,7 +557,7 @@ document.addEventListener("DOMContentLoaded", () => {
       card.setAttribute("tabindex", "0");
       card.setAttribute("title", `Click to load ${food.name} parameters`);
 
-      const emoji = CATEGORY_EMOJIS[food.category] || "📦";
+      const emoji = getFoodEmoji(food);
 
       card.innerHTML = `
         <div class="preset-card-head">
@@ -1250,13 +1283,18 @@ document.addEventListener("DOMContentLoaded", () => {
   // =========================================================================
   // 7. Material Library Catalog
   // =========================================================================
+  // Conversion rate: 1 USD ≈ 83 INR
+  const USD_TO_INR = 83;
+
   function renderCatalogGrid() {
     const materials = window.getPackagingMaterials ? window.getPackagingMaterials() : (window.PACKAGING_MATERIALS || []);
     const query = (elements.catalogSearchInput ? elements.catalogSearchInput.value : "").toLowerCase().trim();
     const typeFilter = elements.catalogTypeFilter ? elements.catalogTypeFilter.value : "ALL";
 
     const filtered = materials.filter(m => {
-      const matchQuery = m.name.toLowerCase().includes(query) || m.layers.toLowerCase().includes(query) || m.recyclabilityClass.toLowerCase().includes(query);
+      const matchQuery = m.name.toLowerCase().includes(query) || 
+                         (m.layers && m.layers.toLowerCase().includes(query)) || 
+                         (m.recyclabilityClass && m.recyclabilityClass.toLowerCase().includes(query));
       const matchType = typeFilter === "ALL" || m.type === typeFilter;
       return matchQuery && matchType;
     });
@@ -1265,27 +1303,46 @@ document.addEventListener("DOMContentLoaded", () => {
     elements.materialsCatalogGrid.innerHTML = "";
 
     filtered.forEach(mat => {
+      // Calculate price in Indian Rupees (INR)
+      const costInINR = (parseFloat(mat.costPerSqM || 0) * USD_TO_INR).toFixed(1);
+
       const card = document.createElement("div");
       card.className = "catalog-material-card";
       card.innerHTML = `
-        <div>
+        <div class="catalog-card-body">
           <div class="catalog-mat-header">
             <h4 class="catalog-mat-name">${mat.name}</h4>
             <span class="catalog-mat-badge">${mat.type}</span>
           </div>
-          <div style="font-size: 0.74rem; color: var(--text-muted); margin: 6px 0 10px; line-height: 1.35;">
+          <div class="catalog-mat-structure">
             ${mat.layers}
           </div>
-          <div class="catalog-mat-specs">
-            <div>OTR: <strong>${mat.otrRange || mat.otr}</strong> cc/m²·day·atm</div>
-            <div>WVTR: <strong>${mat.wvtrRange || mat.wvtr}</strong> g/m²·day</div>
-            <div>Seal Temp: <strong>${mat.sealTempRange || `${mat.sealInitiationTemp}°C`}</strong></div>
-            <div>PPWR: <strong>${mat.recyclabilityClass}</strong></div>
+          <div class="catalog-mat-specs-grid">
+            <div class="mat-spec-item">
+              <span class="mat-spec-label">OTR:</span>
+              <span class="mat-spec-val">${mat.otrRange || mat.otr} cc/m²·d·atm</span>
+            </div>
+            <div class="mat-spec-item">
+              <span class="mat-spec-label">WVTR:</span>
+              <span class="mat-spec-val">${mat.wvtrRange || mat.wvtr} g/m²·d</span>
+            </div>
+            <div class="mat-spec-item">
+              <span class="mat-spec-label">Seal Temp:</span>
+              <span class="mat-spec-val">${mat.sealTempRange || `${mat.sealInitiationTemp}°C`}</span>
+            </div>
+            <div class="mat-spec-item">
+              <span class="mat-spec-label">PPWR:</span>
+              <span class="mat-spec-val ${mat.recyclabilityClass.includes('Class A') ? 'highlight-ppwr' : ''}">${mat.recyclabilityClass}</span>
+            </div>
           </div>
         </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid var(--border-subtle); font-size: 0.78rem;">
-          <span style="font-family: var(--font-mono); color: var(--brand-primary); font-weight: 700;">$${mat.costPerSqM}/m²</span>
-          <button class="btn-secondary btn-sm" onclick="applyMaterialToWorkbench('${mat.id}')">Apply to Plan</button>
+        <div class="catalog-card-footer">
+          <div class="catalog-mat-price">
+            <span class="currency-symbol">₹</span>${costInINR} <span class="price-unit">/ m²</span>
+          </div>
+          <button type="button" class="btn-secondary btn-sm apply-plan-btn" onclick="applyMaterialToWorkbench('${mat.id}')">
+            Apply to Plan
+          </button>
         </div>
       `;
       elements.materialsCatalogGrid.appendChild(card);
@@ -1389,7 +1446,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div style="background: var(--bg-subtle); padding: 12px; border: 1px solid var(--border-subtle); border-radius: 6px;">
           <h4 style="font-size: 0.82rem; font-weight: 700; color: var(--brand-primary); margin-bottom: 6px; text-transform: uppercase;">4. MAP Gas Formulation (Starting Atmosphere)</h4>
           <div style="font-size: 0.78rem;">
-            <div>Suggested Blend: <strong>${rec.mapRecommendation ? `${rec.mapRecommendation.gasBlend.o2}% O2 / ${rec.mapRecommendation.gasBlend.co2}% CO2 / ${rec.mapRecommendation.gasBlend.n2}% N2` : "Ambient"}</strong></div>
+            <div>Suggested Blend: <strong>${rec.mapRecommendation ? `${rec.mapRecommendation.gasBlend.o2}% O2 / ${rec.mapRecommendation.gasBlend.co2}\% CO2 / ${rec.mapRecommendation.gasBlend.n2}% N2` : "Ambient"}</strong></div>
             <div style="color: var(--text-muted); margin-top: 4px;">${rec.mapRecommendation ? rec.mapRecommendation.rationale : ""}</div>
           </div>
         </div>
@@ -1458,7 +1515,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function initClickAnimations() {
     document.addEventListener("click", (e) => {
       const clickable = e.target.closest(
-        "button, a, .cat-chip, .preset-card, .detail-tab-btn, .theme-toggle-btn, .mode-btn, .history-chip, .catalog-material-card, .pipeline-step, .search-clear-btn, .pipeline-info-close"
+        "button, a, .cat-chip, .presets-category-filter, .preset-card, .detail-tab-btn, .theme-toggle-btn, .mode-btn, .history-chip, .catalog-material-card, .pipeline-step, .search-clear-btn, .pipeline-info-close"
       );
       if (clickable) {
         createClickRipple(e, clickable);
@@ -1704,9 +1761,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Preset Category Filter Chips in Nested Ribbon
     if (elements.categoryFiltersWrap) {
       elements.categoryFiltersWrap.addEventListener("click", (e) => {
-        const chip = e.target.closest(".cat-chip");
+        const chip = e.target.closest(".cat-chip, .presets-category-filter");
         if (!chip) return;
-        document.querySelectorAll(".cat-chip").forEach(c => c.classList.remove("active"));
+        document.querySelectorAll(".cat-chip, .presets-category-filter").forEach(c => c.classList.remove("active"));
         chip.classList.add("active");
         currentCategoryFilter = chip.dataset.category || "ALL";
         renderPresetCards();
@@ -1757,18 +1814,20 @@ document.addEventListener("DOMContentLoaded", () => {
         stepEl.classList.add("active-step");
 
         if (elements.pipelineInfoBox) {
-          if (elements.pipeInfoBadge) elements.pipeInfoBadge.textContent = stageData.stage;
-          if (elements.pipeInfoTitle) elements.pipeInfoTitle.textContent = stageData.title;
-          if (elements.pipeInfoDesc) elements.pipeInfoDesc.textContent = stageData.desc;
-          if (elements.pipeInfoInput) elements.pipeInfoInput.textContent = stageData.inputs;
-          if (elements.pipeInfoOutput) elements.pipeInfoOutput.textContent = stageData.outputs;
+          if (elements.pipeInfoBadge) elements.pipeInfoBadge.textContent = stageData.badge || `STAGE 0${stepNum}`;
+          if (elements.pipeInfoTitle) elements.pipeInfoTitle.textContent = stageData.title || "";
+          if (elements.pipeInfoDesc) elements.pipeInfoDesc.textContent = stageData.desc || "";
+          if (elements.pipeInfoInput) elements.pipeInfoInput.textContent = stageData.input || stageData.inputs || "";
+          if (elements.pipeInfoOutput) elements.pipeInfoOutput.textContent = stageData.output || stageData.outputs || "";
           elements.pipelineInfoBox.style.display = "block";
         }
       });
     }
 
+    // Robust Close Handler for Stage Info Box
     if (elements.pipelineInfoClose && elements.pipelineInfoBox) {
-      elements.pipelineInfoClose.addEventListener("click", () => {
+      elements.pipelineInfoClose.addEventListener("click", (e) => {
+        e.stopPropagation();
         elements.pipelineInfoBox.style.display = "none";
         document.querySelectorAll(".pipeline-step").forEach(s => s.classList.remove("active-step"));
       });
