@@ -550,3 +550,82 @@
     gap: 8px !important;
   }
 }
+
+/* 1. Prevent canvas / Chart.js from expanding wider than viewport */
+.chart-container-wrap {
+  width: 100% !important;
+  max-width: 100% !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+#shelfLifeChart {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* 2. Contain all result containers strictly within screen bounds */
+#activeResultsContainer,
+.results-container,
+.recommendation-hero-card,
+.map-gauge-box,
+.panel-card,
+.tab-pane {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
+}
+
+/* 3. Allow wide tables to scroll internally instead of widening the whole page */
+.cost-breakdown-table,
+.compare-matrix-table {
+  display: block !important;
+  width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  white-space: nowrap !important;
+}
+
+/* 4. Mobile screen adaptations for results grids */
+@media screen and (max-width: 768px) {
+  /* Stack 3-metric tiles into a clean single column on phones */
+  .barrier-specs-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  /* Score breakdown into 1 column */
+  .score-progress-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  /* 6-factor explanation cards into 1 column */
+  .why-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  /* MAP gas fraction bar & legend */
+  .gas-fraction-bar {
+    width: 100% !important;
+  }
+
+  .gas-legend {
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+
+  /* Simulator metric cards into a single column */
+  .sim-metrics-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  /* Assumptions grid inside simulator */
+  #simAssumptionsGrid {
+    grid-template-columns: 1fr !important;
+  }
+}
