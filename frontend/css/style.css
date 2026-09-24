@@ -856,6 +856,51 @@ html[data-theme="dark"] .btn-calc-pulse {
 .spinner-icon { animation: annaSpin 1s linear infinite; }
 @keyframes annaSpin { to { transform: rotate(360deg); } }
 
-/* Footer */
-.site-footer { margin-top: 40px; box-shadow: 0 -4px 16px rgba(0,0,0,0.03); }
-.footer-wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+/* ==========================================================================
+   GLOBAL SCREEN TAP & CLICK RIPPLE (LIGHT & DARK COMPATIBLE)
+   ========================================================================== */
+
+/* ==========================================================================
+   SUBTLE SCREEN TAP & CLICK MICRO-PULSE (ELEGANT LIGHT & DARK THEMES)
+   ========================================================================== */
+
+.global-tap-ripple {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.6);
+  animation: globalRipplePulse 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  z-index: 99999;
+}
+
+/* Light Theme: Gentle, translucent sage ring with no harsh core */
+html[data-theme="light"] .global-tap-ripple,
+:root[data-theme="light"] .global-tap-ripple {
+  border: 1px solid rgba(25, 82, 56, 0.25);
+  background: radial-gradient(circle, rgba(25, 82, 56, 0.08) 0%, transparent 70%);
+  box-shadow: 0 0 6px rgba(25, 82, 56, 0.12);
+}
+
+/* Dark Theme: Soft, refined mint glow without flash */
+html[data-theme="dark"] .global-tap-ripple,
+:root[data-theme="dark"] .global-tap-ripple {
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  background: radial-gradient(circle, rgba(52, 211, 153, 0.12) 0%, transparent 70%);
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.2);
+}
+
+@keyframes globalRipplePulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.6);
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.45;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.4); /* Kept compact instead of blowing out */
+    opacity: 0;
+  }
+}
