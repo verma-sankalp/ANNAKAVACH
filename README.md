@@ -98,7 +98,9 @@ ANNAKAVACH/
 └── frontend/                    # Public Web Application Client
     ├── index.html               # Semantic application shell & workspace UI
     ├── assets/                  # Static assets & brand imagery
-    │   └── .gitkeep
+    │   ├── .gitkeep
+    │   ├── favicons
+    │   ├── ANNAKAVACH_mark.png
     ├── css/                     # Modular design system stylesheets
     │   ├── style.css            # Design tokens, themes (Light/Dark), resets, forms, animations
     │   ├── components.css       # Cards, gauges, scorecards, matrices, regulatory deck
