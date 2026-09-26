@@ -858,9 +858,9 @@ html[data-theme="dark"] .btn-calc-pulse {
 .spinner-icon { animation: annaSpin 1s linear infinite; }
 @keyframes annaSpin { to { transform: rotate(360deg); } }
 
-/* ==========================================================================
-   GLOBAL SCREEN TAP & CLICK RIPPLE (LIGHT & DARK COMPATIBLE)
-   ========================================================================== */
+.disclaimer-banner {
+   font-size: 1em;
+}
 
 /* ==========================================================================
    SUBTLE SCREEN TAP & CLICK MICRO-PULSE (ELEGANT LIGHT & DARK THEMES)
