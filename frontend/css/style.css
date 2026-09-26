@@ -859,7 +859,7 @@ html[data-theme="dark"] .btn-calc-pulse {
 @keyframes annaSpin { to { transform: rotate(360deg); } }
 
 .disclaimer-banner {
-   font-size: 1em;
+   font-size: 0.5em;
 }
 
 /* ==========================================================================
