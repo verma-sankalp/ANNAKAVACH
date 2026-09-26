@@ -209,6 +209,7 @@
   box-shadow: var(--shadow-sm);
   overflow-x: auto;
   scrollbar-width: none;
+  margin-bottom: 6px;
 }
 .workflow-pipeline-bar::-webkit-scrollbar { display: none; }
 
